@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La Barra Montemar - Crónicas del Waffle Legendario</title>
+<style>
+:root{
+  --orange:#ff8a00;--yellow:#ffd166;--cyan:#65f4ff;--purple:#8b5cf6;
+  --dark:#140704;--green:#7dff9b;--red:#ff6961;--cream:#fff3c4;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+body{
+  min-height:100vh;color:white;padding:14px;
+  background:
+    radial-gradient(circle at 12% 6%,#65f4ff44,transparent 28%),
+    radial-gradient(circle at 86% 0%,#8b5cf655,transparent 26%),
+    radial-gradient(circle at 50% 100%,#ff8a0040,transparent 30%),
+    linear-gradient(135deg,#100501,#401603,#140704);
+}
+.app{max-width:1180px;margin:auto;background:#140704f2;border:3px solid var(--yellow);border-radius:30px;overflow:hidden;box-shadow:0 25px 80px #000c}
+header{padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,#ff8a0030,#65f4ff20,#8b5cf630);border-bottom:1px solid #fff2}
+.logo{display:flex;gap:13px;align-items:center}.mark{width:62px;height:62px;border-radius:20px;background:linear-gradient(135deg,var(--yellow),var(--orange),var(--purple));display:grid;place-items:center;font-size:36px;box-shadow:0 7px 0 #742b00}
+h1{font-size:clamp(25px,4vw,44px);line-height:.95;color:var(--cream);text-shadow:0 4px 0 #742b00}
+header p{font-size:12px;color:var(--cyan);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.wrap{display:grid;grid-template-columns:310px 1fr;min-height:690px}
+aside{background:#0004;border-right:1px solid #fff2;padding:16px}
+main{padding:18px}
+.card{background:#ffffff14;border:1px solid #ffffff26;border-radius:23px;padding:18px;margin-bottom:14px;backdrop-filter:blur(7px)}
+.screen{display:none;animation:show .25s ease}.screen.active{display:block}@keyframes show{from{opacity:0;transform:translateY(9px)}to{opacity:1}}
+.badge{display:inline-block;background:#65f4ff22;border:1px solid #65f4ff70;color:var(--cyan);border-radius:999px;padding:8px 12px;font-weight:900;font-size:13px;margin-bottom:12px}
+.title{font-size:clamp(32px,5vw,60px);line-height:.95;color:var(--cream);text-shadow:0 5px 0 #742b00;margin-bottom:12px}
+.scene-title{font-size:clamp(25px,4vw,43px);color:var(--cream);text-shadow:0 4px 0 #742b00;margin-bottom:10px}
+.text{font-size:18px;line-height:1.58;color:#ffffffe9;white-space:pre-line}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{border:0;border-radius:999px;padding:13px 16px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#2b1204;font-weight:1000;text-transform:uppercase;box-shadow:0 6px 0 #742b00;cursor:pointer}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #742b00}
+.btn.blue{background:linear-gradient(135deg,var(--cyan),#00b4d8);box-shadow:0 6px 0 #005f73}
+.btn.ghost{background:#ffffff18;color:white;box-shadow:none;border:1px solid #ffffff32}
+.btn.red{background:linear-gradient(135deg,#ff9a9a,#ff4545);box-shadow:0 6px 0 #741515}
+input,textarea{width:100%;padding:13px;border-radius:15px;border:2px solid #ffd166bb;background:white;color:#2b1204;font-size:16px;margin-top:10px}textarea{min-height:115px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.choice{background:#ffffff18;color:white;border:2px solid #ffffff26;border-radius:20px;padding:15px;text-align:left;min-height:100px;cursor:pointer;box-shadow:0 7px 0 #0005}
+.choice:hover{border-color:var(--yellow);transform:translateY(-3px)}
+.choice strong{display:block;color:var(--cream);font-size:18px;margin-bottom:6px}.choice small{color:#ffffffbf;line-height:1.36}
+.choice.sel{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#2b1204}.choice.sel strong,.choice.sel small{color:#2b1204}
+.stat{margin-bottom:12px}.stat-top{display:flex;justify-content:space-between;color:var(--cream);font-weight:900;font-size:14px;margin-bottom:7px}
+.bar{height:12px;background:#0008;border-radius:999px;overflow:hidden;border:1px solid #ffffff25}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--yellow));transition:.25s}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.metric{background:#0005;border-radius:14px;padding:10px;text-align:center}.metric strong{display:block;color:var(--cream);font-size:22px}.metric span{font-size:12px;color:#ffffffaa;font-weight:900}
+.inv{display:flex;gap:7px;flex-wrap:wrap;min-height:34px}.chip{display:inline-block;background:#ffd16625;border:1px solid #ffd16688;border-radius:999px;padding:7px 10px;font-weight:900;font-size:13px}
+.aura{display:grid;gap:6px}.aura-row{display:grid;grid-template-columns:78px 1fr 30px;gap:7px;align-items:center;font-size:12px;color:#ffffffc0}.aura-bar{height:8px;background:#0008;border-radius:99px;overflow:hidden}.aura-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--yellow))}
+.log{font-size:12px;color:#ffffff99;max-height:120px;overflow:auto}.log div{padding:5px 0;border-bottom:1px solid #ffffff12}
+.toast{display:none;margin-top:12px;padding:12px;border-left:5px solid var(--yellow);background:#ffd16620;border-radius:13px;color:var(--cream);font-weight:900}.toast.show{display:block}
+.seq{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;min-height:60px;margin-top:14px}.seq span,.mem button{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;background:#ffffff20;border:2px solid #ffffff25;font-size:31px;color:#fff}
+.mem{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}.mem button{width:100%;height:74px;cursor:pointer}
+.arena{height:300px;background:#0005;border:2px solid #ffffff25;border-radius:22px;margin-top:14px;position:relative;overflow:hidden;touch-action:manipulation}
+.target{position:absolute;width:70px;height:70px;border:0;border-radius:50%;background:linear-gradient(135deg,#fff3c4,#ffb703);box-shadow:0 8px 0 #8b5200;font-size:35px}
+.track{height:54px;border-radius:99px;background:#ffffff18;border:2px solid #ffffff25;margin-top:20px;position:relative;overflow:hidden}.zone{position:absolute;left:38%;width:24%;height:100%;background:#7dff9b55;border-left:3px solid var(--green);border-right:3px solid var(--green)}.marker{position:absolute;top:4px;left:0;width:28px;height:42px;border-radius:99px;background:linear-gradient(#fff3c4,#ffb703);box-shadow:0 0 18px #ffd166aa;transform:translateX(-50%)}
+.brew{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.brew button{min-height:75px;border-radius:18px;border:2px solid #ffffff25;background:#ffffff18;color:white;font-size:17px;font-weight:900;cursor:pointer}
+.table{overflow:auto;max-height:320px;border:1px solid #ffffff25;border-radius:16px;margin-top:14px}table{width:100%;border-collapse:collapse;min-width:780px}th,td{padding:10px;border-bottom:1px solid #ffffff18;text-align:left;font-size:13px}th{background:#0006;color:var(--cream);position:sticky;top:0}
+.coupon{background:linear-gradient(#fff7dc,#ffe59a);color:#2b1204;border:4px dashed var(--orange);border-radius:25px;padding:20px;margin-top:16px}.coupon h3{font-size:28px;color:#f25c00}.code{margin-top:10px;background:#2b1204;color:#ffe082;padding:14px;border-radius:15px;font-size:25px;font-weight:1000;text-align:center;letter-spacing:2px}.stamp{display:none;margin-top:10px;background:#0c6b35;color:white;border-radius:14px;padding:12px;text-align:center;font-weight:1000}
+.ending-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.ending-card{background:#0004;border:1px solid #fff2;border-radius:15px;padding:12px}.ending-card strong{color:var(--cream)}
+.hide{display:none!important}
+@media(max-width:920px){body{padding:0}.app{border:0;border-radius:0}.wrap{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid #fff2}.grid,.ending-list{grid-template-columns:1fr}.mem{grid-template-columns:repeat(3,1fr)}.brew{grid-template-columns:1fr}.arena{height:260px}}
+@media(max-width:460px){main,aside{padding:12px}.text{font-size:16px}.mem{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="logo"><div class="mark">🧇</div><div><h1>Crónicas del Waffle Legendario</h1><p>La Barra Montemar · RPG con múltiples finales</p></div></div>
+  <div class="btns" style="margin-top:0">
+    <button class="btn blue" id="musicBtn" onclick="toggleMusic()">🎵 Música</button>
+    <button class="btn ghost" onclick="show('endings')">📜 Finales</button>
+    <button class="btn ghost" onclick="show('admin')">⭐ Clientes</button>
+  </div>
+</header>
+
+<div class="wrap">
+<aside>
+  <div class="card">
+    <div class="stat-top"><span>Cliente</span><span id="sideClient">Invitado</span></div>
+    <div class="metrics"><div class="metric"><strong id="sidePoints">0</strong><span>Puntos</span></div><div class="metric"><strong id="sideVisits">0</strong><span>Visitas</span></div></div>
+  </div>
+  <div class="card">
+    <div class="stat-top"><span>Héroe</span><span id="sideHero">Sin elegir</span></div>
+    <div id="sideEmoji" style="text-align:center;font-size:52px">✨</div>
+    <div id="sideRole" style="text-align:center;color:#ffffffaa;font-size:13px">Elige tu destino.</div>
+  </div>
+  <div class="card">
+    <div class="stat"><div class="stat-top"><span>⚡ Energía</span><span id="eVal">50</span></div><div class="bar"><span id="eBar"></span></div></div>
+    <div class="stat"><div class="stat-top"><span>🧠 Enfoque</span><span id="fVal">50</span></div><div class="bar"><span id="fBar"></span></div></div>
+    <div class="stat"><div class="stat-top"><span>🔥 Actitud</span><span id="aVal">50</span></div><div class="bar"><span id="aBar"></span></div></div>
+    <div class="stat-top"><span>🧩 Fragmentos</span><span id="fragVal">0/6</span></div>
+    <div class="inv" id="inv"></div>
+  </div>
+  <div class="card">
+    <div class="stat-top"><span>Aura del jugador</span><span id="mainAura">-</span></div>
+    <div class="aura" id="auraBox"></div>
+  </div>
+  <div class="card"><div class="stat-top"><span>Bitácora</span></div><div class="log" id="log"></div></div>
+</aside>
+
+<main>
+<section id="intro" class="screen active card">
+  <div class="badge">Prólogo · La leyenda se expande</div>
+  <h2 class="title">El Waffle Legendario ya no tiene un solo destino.</h2>
+  <p class="text">El Gnomo del Bajón no solo robó la receta: rompió el libro en seis fragmentos y escondió rutas distintas dentro de La Barra Montemar.
+
+Cada decisión crea una “aura”: Café, Matcha, Proteína, Comunidad, Caos o Redención. 
+El final cambia según tu aura dominante, tus fragmentos, tus estadísticas y lo que hagas con el Gnomo.
+
+Puedes ganar el waffle, desbloquear finales secretos y fidelizar al cliente con puntos, visitas y cupones.</p>
+  <div class="btns">
+    <button class="btn" onclick="show('register')">Registrar jugador</button>
+    <button class="btn blue" onclick="guest()">Jugar invitado</button>
+    <button class="btn ghost" onclick="show('endings')">Ver finales posibles</button>
+  </div>
+</section>
+
+<section id="register" class="screen card">
+  <div class="badge">Fidelización · Registro rápido</div>
+  <h2 class="scene-title">Registra al cliente</h2>
+  <p class="text">Se guardará en este dispositivo. El contacto es opcional. El cliente suma puntos por jugar, ganar minijuegos y desbloquear finales.</p>
+  <div class="grid"><input id="name" placeholder="Nombre del cliente"><input id="contact" placeholder="WhatsApp o email opcional"></div>
+  <div class="btns"><button class="btn" onclick="register()">Guardar y jugar</button><button class="btn ghost" onclick="show('intro')">Volver</button></div>
+  <div id="regToast" class="toast"></div>
+</section>
+
+<section id="hero" class="screen card">
+  <div class="badge">Capítulo 1 · Elige tu clase</div>
+  <h2 class="scene-title">¿Qué héroe entra a La Barra?</h2>
+  <p class="text">Tu clase influye en tus estadísticas iniciales y en el tipo de final que puedes desbloquear.</p>
+  <div class="grid">
+    <button class="choice" onclick="pickHero('Guerrero del Café','☕','Energía inicial alta',78,44,55,'cafe',this)"><strong>☕ Guerrero del Café</strong><small>Ruta de velocidad, aroma y espresso. Puede desbloquear el Final Café Supremo.</small></button>
+    <button class="choice" onclick="pickHero('Mago del Matcha','🍵','Enfoque inicial alto',44,82,55,'matcha',this)"><strong>🍵 Mago del Matcha</strong><small>Ruta de calma, memoria y precisión. Puede desbloquear el Final Matcha Sabio.</small></button>
+    <button class="choice" onclick="pickHero('Bárbaro de la Proteína','💪','Actitud inicial alta',60,44,82,'proteina',this)"><strong>💪 Bárbaro de la Proteína</strong><small>Ruta de fuerza, desafío y gloria. Puede desbloquear el Final Bestia Proteica.</small></button>
+    <button class="choice" onclick="pickHero('Cazador del Smoothie','🥤','Equilibrio completo',64,64,64,'comunidad',this)"><strong>🥤 Cazador del Smoothie</strong><small>Ruta equilibrada y social. Puede desbloquear el Final Comunidad Montemar.</small></button>
+  </div>
+  <div class="btns"><button class="btn" onclick="start()">Comenzar misión</button><button class="btn ghost" onclick="show('intro')">Volver</button></div>
+  <div id="heroToast" class="toast"></div>
+</section>
+
+<section id="story" class="screen card">
+  <div class="badge" id="badge">Capítulo</div>
+  <h2 class="scene-title" id="sTitle">Título</h2>
+  <p class="text" id="sText">Texto</p>
+  <div class="grid" id="choices"></div>
+  <div id="storyToast" class="toast"></div>
+</section>
+
+<section id="memory" class="screen card">
+  <div class="badge">Minijuego · Memoria del Matcha</div>
+  <h2 class="scene-title">Recuerda la secuencia</h2>
+  <p class="text">Observa los símbolos y tócalos en el mismo orden. Si aciertas, ganas un fragmento y aura Matcha.</p>
+  <div class="seq" id="seq"></div><div class="mem" id="memBtns"></div>
+  <div class="btns"><button class="btn blue" onclick="startMemory()">Mostrar secuencia</button><button class="btn ghost" onclick="skipTo(2)">Saltar</button></div>
+  <div id="memToast" class="toast"></div>
+</section>
+
+<section id="catch" class="screen card">
+  <div class="badge">Minijuego · Caza Waffles</div>
+  <h2 class="scene-title">Atrapa los waffles luminosos</h2>
+  <p class="text">Toca 7 waffles en 11 segundos. Si lo logras, ganas un fragmento y aura Café.</p>
+  <div class="metrics" style="grid-template-columns:1fr 1fr"><div class="metric"><strong id="caught">0</strong><span>Atrapados</span></div><div class="metric"><strong id="time">11</strong><span>Segundos</span></div></div>
+  <div class="arena" id="arena"></div>
+  <div class="btns"><button class="btn blue" onclick="startCatch()">Iniciar</button><button class="btn ghost" onclick="skipTo(3)">Saltar</button></div>
+  <div id="catchToast" class="toast"></div>
+</section>
+
+<section id="brew" class="screen card">
+  <div class="badge">Minijuego · Alquimia de La Barra</div>
+  <h2 class="scene-title">Crea el combo correcto</h2>
+  <p class="text">El libro pide: Proteína + Café + Waffle. Toca los ingredientes en ese orden exacto.</p>
+  <div class="brew">
+    <button onclick="brewPick('Proteína')">💪 Proteína</button>
+    <button onclick="brewPick('Café')">☕ Café</button>
+    <button onclick="brewPick('Waffle')">🧇 Waffle</button>
+    <button onclick="brewPick('Matcha')">🍵 Matcha</button>
+    <button onclick="brewPick('Syrup')">🍯 Syrup</button>
+    <button onclick="brewPick('Hielo')">🧊 Hielo</button>
+  </div>
+  <div class="inv" id="brewList" style="margin-top:12px"></div>
+  <div class="btns"><button class="btn blue" onclick="checkBrew()">Confirmar</button><button class="btn ghost" onclick="resetBrew()">Reiniciar</button><button class="btn ghost" onclick="skipTo(4)">Saltar</button></div>
+  <div id="brewToast" class="toast"></div>
+</section>
+
+<section id="timing" class="screen card">
+  <div class="badge">Minijuego · Punto perfecto</div>
+  <h2 class="scene-title">Detén la waflera en verde</h2>
+  <p class="text">La masa está viva. Detén el marcador dentro de la zona verde para ganar un fragmento y aura Proteína.</p>
+  <div class="track"><div class="zone"></div><div class="marker" id="marker"></div></div>
+  <div class="btns"><button class="btn blue" onclick="startTiming()">Iniciar</button><button class="btn" onclick="stopTiming()">Detener</button><button class="btn ghost" onclick="skipTo(5)">Saltar</button></div>
+  <div id="timingToast" class="toast"></div>
+</section>
+
+<section id="riddle" class="screen card">
+  <div class="badge">Minijuego · Acertijo del Barista</div>
+  <h2 class="scene-title">La pregunta del Guardián</h2>
+  <p class="text">“No soy espada, pero despierto batallas. No soy magia, pero levanto la mañana. En La Barra vivo caliente o helado. ¿Qué soy?”</p>
+  <div class="grid">
+    <button class="choice" onclick="answerRiddle(false)"><strong>Un shaker</strong><small>Sirve, pero no es la respuesta.</small></button>
+    <button class="choice" onclick="answerRiddle(true)"><strong>El café</strong><small>Caliente, helado y poderoso.</small></button>
+    <button class="choice" onclick="answerRiddle(false)"><strong>Una pesa</strong><small>Del templo del gym.</small></button>
+    <button class="choice" onclick="answerRiddle(false)"><strong>Un waffle invisible</strong><small>Suena bien, pero no.</small></button>
+  </div>
+  <div id="riddleToast" class="toast"></div>
+</section>
+
+<section id="final" class="screen card">
+  <div class="badge">Jefe final · El destino del Gnomo</div>
+  <h2 class="scene-title">El Gnomo del Bajón se rinde... o tal vez no</h2>
+  <p class="text">El Gnomo aparece cansado. Dice que robó la receta porque nadie lo invitaba a la mesa.
+Tu última decisión define el final.
+
+Elige cómo enfrentar el cierre de la historia.</p>
+  <div class="grid">
+    <button class="choice" onclick="finalMode('power')"><strong>🔥 Derrotarlo con fuerza</strong><small>Busca un final de gloria, actitud y proteína.</small></button>
+    <button class="choice" onclick="finalMode('wisdom')"><strong>🍵 Vencerlo con sabiduría</strong><small>Busca un final de calma, enfoque y matcha.</small></button>
+    <button class="choice" onclick="finalMode('speed')"><strong>☕ Superarlo con velocidad</strong><small>Busca un final de energía, café y precisión.</small></button>
+    <button class="choice" onclick="finalMode('mercy')"><strong>🤝 Invitarlo a La Barra</strong><small>Puede desbloquear un final secreto de redención.</small></button>
+  </div>
+  <textarea id="phrase" placeholder="Escribe una frase final para La Barra Montemar..."></textarea>
+  <div class="btns"><button class="btn" onclick="finish()">Desbloquear final</button></div>
+  <div id="finalToast" class="toast"></div>
+</section>
+
+<section id="win" class="screen card">
+  <div class="badge">Final obtenido</div>
+  <h2 class="title" id="endTitle"></h2>
+  <p class="text" id="endText"></p>
+  <div id="coupon" class="coupon hide">
+    <h3>🧇 Premio desbloqueado</h3>
+    <p><strong id="prizeText">1 Waffle Legendario gratis</strong></p>
+    <p>Presenta esta pantalla al equipo de La Barra Montemar.</p>
+    <div class="code" id="code"></div>
+    <input id="pin" type="password" placeholder="PIN de staff para canjear">
+    <div class="btns"><button class="btn blue" onclick="redeem()">Validar premio</button><button class="btn ghost" onclick="window.print()">Imprimir</button></div>
+    <div id="stamp" class="stamp">CANJE AUTORIZADO POR STAFF</div>
+    <p style="font-size:12px;margin-top:10px">Promoción válida hasta agotar stock. Un premio por persona. Sujeto a validación del local.</p>
+  </div>
+  <div class="btns"><button class="btn" onclick="restart()">Jugar otra vez</button><button class="btn ghost" onclick="show('intro')">Inicio</button><button class="btn ghost" onclick="show('endings')">Ver finales</button></div>
+</section>
+
+<section id="endings" class="screen card">
+  <div class="badge">Guía de finales</div>
+  <h2 class="scene-title">Finales posibles</h2>
+  <p class="text">El juego ahora tiene distintos desenlaces. Algunos entregan cupón, otros son finales alternativos para que el cliente quiera volver a jugar.</p>
+  <div class="ending-list">
+    <div class="ending-card"><strong>🏆 Final Waffle Legendario</strong><br>Buen puntaje, 5+ fragmentos y equilibrio general.</div>
+    <div class="ending-card"><strong>☕ Final Café Supremo</strong><br>Aura Café dominante y alta energía.</div>
+    <div class="ending-card"><strong>🍵 Final Matcha Sabio</strong><br>Aura Matcha dominante y alto enfoque.</div>
+    <div class="ending-card"><strong>💪 Final Bestia Proteica</strong><br>Aura Proteína dominante y alta actitud.</div>
+    <div class="ending-card"><strong>🤝 Final Comunidad Montemar</strong><br>Aura Comunidad dominante y buen resultado.</div>
+    <div class="ending-card"><strong>🧙 Final Redención del Gnomo</strong><br>Elegir misericordia, tener comunidad y buen puntaje.</div>
+    <div class="ending-card"><strong>🌪️ Final Caos del Syrup</strong><br>Demasiadas decisiones caóticas.</div>
+    <div class="ending-card"><strong>⚔️ Final Casi Legendario</strong><br>Buen intento, pero faltaron fragmentos o estadísticas.</div>
+    <div class="ending-card"><strong>😴 Final Bajón Total</strong><br>Muy pocos fragmentos o bajo puntaje.</div>
+  </div>
+  <div class="btns"><button class="btn ghost" onclick="show('intro')">Volver</button></div>
+</section>
+
+<section id="admin" class="screen card">
+  <div class="badge">Acceso restringido · Administradores</div>
+  <h2 class="scene-title">Panel privado de clientes</h2>
+  <p class="text">
+    Esta sección queda bloqueada para jugadores. Solo el equipo de La Barra puede ver la base, exportar CSV, sumar puntos o borrar registros.
+  </p>
+
+  <div id="adminLogin">
+    <input id="adminPin" type="password" placeholder="Ingresa PIN de administrador">
+    <div class="btns">
+      <button class="btn blue" onclick="unlock()">Entrar como admin</button>
+      <button class="btn ghost" onclick="show('intro')">Volver al juego</button>
+    </div>
+  </div>
+
+  <div id="adminPanel" class="hide">
+    <div class="badge" style="background:#7dff9b22;border-color:#7dff9b;color:#7dff9b">Panel desbloqueado</div>
+    <div class="grid">
+      <input id="search" placeholder="Buscar cliente por nombre o contacto" oninput="renderCustomers()">
+      <input id="manualPoints" type="number" placeholder="Puntos manuales, ej: 100">
+    </div>
+
+    <div class="btns">
+      <button class="btn" onclick="exportCSV()">Exportar CSV</button>
+      <button class="btn ghost" onclick="renderCustomers()">Actualizar tabla</button>
+      <button class="btn red" onclick="clearDB()">Borrar base local</button>
+      <button class="btn ghost" onclick="logoutAdmin()">Cerrar sesión admin</button>
+    </div>
+
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Contacto</th>
+            <th>Puntos</th>
+            <th>Visitas</th>
+            <th>Jugadas</th>
+            <th>Finales</th>
+            <th>Cupones</th>
+            <th>Última visita</th>
+            <th>Acción admin</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="adminToast" class="toast"></div>
+</section>
+
+</main>
+</div>
+</div>
+
+<script>
+const PIN="LABARRA", DB="laBarraCronicasWaffleV3";
+let db=loadDB(), admin=false, selectedBtn=null, selectedFinalMode=null;
+let st={client:null,hero:"",emoji:"✨",role:"",e:50,f:50,a:50,frag:0,items:[],log:[],scene:0,coupon:null,ending:"",aura:{cafe:0,matcha:0,proteina:0,comunidad:0,caos:0,redencion:0}};
+const story=[
+ {b:"Capítulo 2 · Portal de Montemar",t:"La puerta vibra con aroma a café",x:"El libro de recetas se abre y te ofrece tres formas de iniciar la misión.",c:[
+  ["Saludar a todos en La Barra","Subes comunidad y recibes ayuda del Barista.",()=>{aura("comunidad",3);stat("a",10);item("Sello del Barista");frag("El Barista te entrega el primer fragmento.");},1],
+  ["Correr directo al espresso","Subes energía y aura Café, pero pierdes algo de enfoque.",()=>{aura("cafe",3);stat("e",18);stat("f",-5);item("Espresso Arcano");},1],
+  ["Leer el mensaje del Pan de Vida","Subes enfoque, comunidad y redención.",()=>{aura("comunidad",2);aura("redencion",2);stat("f",14);stat("a",5);item("Mensaje de Esperanza");},1],
+  ["Robar una gota de syrup mágico","Ganas energía rápida, pero sube el caos.",()=>{aura("caos",4);stat("e",12);stat("f",-8);item("Syrup Inestable");},1]
+ ]},
+ {b:"Capítulo 3 · Santuario Matcha",t:"Los símbolos del Matcha despiertan",x:"Una nube verde forma una secuencia sobre el mesón. Si la recuerdas, el libro entregará otro fragmento.",c:[
+  ["Entrar al santuario","Activa el minijuego de memoria.",()=>{aura("matcha",2);stat("f",5)},'memory'],
+  ["Pedir ayuda al Mago del Matcha","Ganas enfoque y comunidad antes de la prueba.",()=>{aura("matcha",2);aura("comunidad",1);stat("f",10)},'memory']
+ ]},
+ {b:"Capítulo 4 · Arena de Toppings",t:"Waffles luminosos saltan por todos lados",x:"El Gnomo abre una mini arena. Cada waffle atrapado fortalece el aroma del local.",c:[
+  ["Entrar corriendo","Activa caza waffles con aura Café.",()=>{aura("cafe",2);stat("e",6)},'catch'],
+  ["Animar al público antes de entrar","Subes comunidad y actitud.",()=>{aura("comunidad",2);stat("a",10)},'catch'],
+  ["Empujar al Gnomo y quitarle el mapa","Ganas ventaja, pero sube caos.",()=>{aura("caos",3);stat("e",8);item("Mapa Robado")},'catch']
+ ]},
+ {b:"Capítulo 5 · Alquimia de La Barra",t:"La receta pide orden",x:"Sobre la mesa hay proteína, café, waffle, matcha, syrup y hielo. El libro exige una combinación exacta.",c:[
+  ["Preparar el combo correcto","Activa el minijuego de mezcla.",()=>{aura("proteina",2);stat("f",4)},'brew'],
+  ["Hacerlo como show frente a clientes","Subes comunidad y actitud.",()=>{aura("comunidad",2);stat("a",8)},'brew']
+ ]},
+ {b:"Capítulo 6 · Waflera ancestral",t:"La masa quiere el punto perfecto",x:"La waflera se enciende. Si detienes el marcador en la zona verde, el waffle queda perfecto.",c:[
+  ["Ir por el punto perfecto","Activa timing.",()=>{aura("proteina",2);stat("a",5)},'timing'],
+  ["Respirar y observar antes de actuar","Ganas enfoque.",()=>{aura("matcha",2);stat("f",10)},'timing']
+ ]},
+ {b:"Capítulo 7 · Acertijo del Barista",t:"La última puerta pregunta",x:"El Barista Guardián sonríe: solo quien entiende La Barra puede pasar.",c:[
+  ["Responder el acertijo","Activa pregunta final.",()=>{aura("cafe",1);stat("f",5)},'riddle'],
+  ["Responder con humildad","Subes redención y comunidad.",()=>{aura("redencion",2);aura("comunidad",1);stat("a",5)},'riddle']
+ ]},
+ {b:"Capítulo 8 · Antes del Gnomo",t:"El Gnomo no parece tan malo",x:"Lo encuentras sentado junto a la waflera. Tiene la receta, pero también hambre. Susurra: “yo solo quería que alguien me invitara”.",c:[
+  ["Prepararte para derrotarlo","Subes proteína y actitud.",()=>{aura("proteina",3);stat("a",12)},'final'],
+  ["Ofrecerle un lugar en la mesa","Subes redención y comunidad.",()=>{aura("redencion",4);aura("comunidad",2);stat("f",6);stat("a",6)},'final'],
+  ["Tomar la receta a la fuerza","Sube caos y energía.",()=>{aura("caos",4);stat("e",10);stat("f",-8)},'final'],
+  ["Compartir un café antes del duelo","Subes café y redención.",()=>{aura("cafe",2);aura("redencion",2);stat("e",8)},'final']
+ ]}
+];
+
+function $(id){return document.getElementById(id)}
+function show(id){
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ $(id).classList.add("active");
+ ui();
+ if(id==="admin") lockAdminPanel();
+}
+function toast(id,msg){$(id).textContent=msg;$(id).classList.add("show")}
+function loadDB(){try{return JSON.parse(localStorage.getItem(DB))||[]}catch(e){return[]}}
+function saveDB(){localStorage.setItem(DB,JSON.stringify(db));ui();renderCustomers()}
+function newId(){return "C"+Date.now().toString(36).toUpperCase()+Math.floor(Math.random()*999)}
+function client(){return db.find(x=>x.id===st.client)}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function log(x){st.log.unshift(x);st.log=st.log.slice(0,12)}
+function stat(k,n){st[k]=Math.max(0,Math.min(100,st[k]+n))}
+function aura(k,n){st.aura[k]+=n}
+function item(x){if(!st.items.includes(x)){st.items.push(x);log("Objeto: "+x);sfx("item")}}
+function addPts(n,why){let c=client();if(!c)return;c.points+=n;c.last=new Date().toLocaleString("es-CL");saveDB();log("Cliente +"+n+" pts: "+why)}
+function frag(msg){if(st.frag<6){st.frag++;addPts(25,"fragmento");log("Fragmento "+st.frag+"/6");if(msg)toast("storyToast","🧩 "+msg);sfx("good")}}
+function dominantAura(){let entries=Object.entries(st.aura).sort((a,b)=>b[1]-a[1]);return entries[0][0]}
+function auraLabel(k){return {cafe:"Café",matcha:"Matcha",proteina:"Proteína",comunidad:"Comunidad",caos:"Caos",redencion:"Redención"}[k]||"-"}
+
+function register(){
+ let name=$("name").value.trim(), contact=$("contact").value.trim();
+ if(name.length<2){toast("regToast","Escribe el nombre del cliente.");return}
+ let c=db.find(x=>x.name.toLowerCase()===name.toLowerCase()||(contact&&x.contact&&x.contact.toLowerCase()===contact.toLowerCase()));
+ let now=new Date().toLocaleString("es-CL");
+ if(c){c.visits++;c.points+=10;c.last=now;st.client=c.id;toast("regToast","Cliente encontrado: +1 visita y +10 puntos.")}
+ else{c={id:newId(),name,contact,points:30,visits:1,plays:0,coupons:[],endings:[],last:now,created:now};db.push(c);st.client=c.id;toast("regToast","Cliente creado: +30 puntos de bienvenida.")}
+ saveDB();setTimeout(()=>show("hero"),650)
+}
+function guest(){st.client=null;reset(false);show("hero")}
+function pickHero(n,e,r,ev,fv,av,a,btn){st.hero=n;st.emoji=e;st.role=r;st.e=ev;st.f=fv;st.a=av;aura(a,3);if(selectedBtn)selectedBtn.classList.remove("sel");selectedBtn=btn;btn.classList.add("sel");toast("heroToast",e+" Elegiste "+n);ui();sfx("item")}
+function start(){if(!st.hero){toast("heroToast","Primero elige un personaje.");sfx("bad");return}st.scene=0;st.frag=0;st.items=[];st.log=[];selectedFinalMode=null;let c=client();if(c){c.plays++;c.points+=20;saveDB()}log("La campaña comenzó.");renderScene();show("story");sfx("good")}
+function renderScene(){
+ let s=story[st.scene];$("badge").textContent=s.b;$("sTitle").textContent=s.t;$("sText").textContent=s.x;$("choices").innerHTML="";$("storyToast").classList.remove("show");
+ s.c.forEach(ch=>{let b=document.createElement("button");b.className="choice";b.innerHTML="<strong>"+ch[0]+"</strong><small>"+ch[1]+"</small>";b.onclick=()=>{ch[2]();log("Elegiste: "+ch[0]);sfx("click"); if(typeof ch[3]==="number"){st.scene=ch[3];renderScene()}else show(ch[3]);ui()};$("choices").appendChild(b)})
+}
+function skipTo(n){st.scene=n;renderScene();show("story")}
+
+function ui(){
+ $("sideHero").textContent=st.hero||"Sin elegir";$("sideEmoji").textContent=st.emoji;$("sideRole").textContent=st.role||"Elige tu destino.";
+ $("eVal").textContent=st.e;$("fVal").textContent=st.f;$("aVal").textContent=st.a;$("eBar").style.width=st.e+"%";$("fBar").style.width=st.f+"%";$("aBar").style.width=st.a+"%";$("fragVal").textContent=st.frag+"/6";
+ let c=client();$("sideClient").textContent=c?c.name:"Invitado";$("sidePoints").textContent=c?c.points:0;$("sideVisits").textContent=c?c.visits:0;
+ $("inv").innerHTML=st.items.length?st.items.map(i=>'<span class="chip">'+esc(i)+'</span>').join(""):'<span style="color:#ffffff88;font-size:13px">Sin objetos</span>';
+ $("log").innerHTML=st.log.map(l=>"<div>"+esc(l)+"</div>").join("");
+ const maxA=dominantAura();$("mainAura").textContent=auraLabel(maxA);
+ $("auraBox").innerHTML=Object.entries(st.aura).map(([k,v])=>`<div class="aura-row"><span>${auraLabel(k)}</span><div class="aura-bar"><span style="width:${Math.min(100,v*10)}%"></span></div><b>${v}</b></div>`).join("")
+}
+
+// Audio
+let ctx,gain,music=false,mTimer=null;const mel=[262,330,392,523,392,330,294,349,392,440,392,330,523,587,659,784];
+function audio(){if(ctx)return;ctx=new (window.AudioContext||window.webkitAudioContext)();gain=ctx.createGain();gain.gain.value=.055;gain.connect(ctx.destination)}
+function tone(f,d=.13,type="sine",v=.05){if(!ctx)return;let o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=f;g.gain.value=0;o.connect(g);g.connect(gain);let now=ctx.currentTime;g.gain.linearRampToValueAtTime(v,now+.01);g.gain.exponentialRampToValueAtTime(.001,now+d);o.start(now);o.stop(now+d+.04)}
+function toggleMusic(){audio();if(ctx.state==="suspended")ctx.resume();music=!music;$("musicBtn").textContent=music?"🔇 Apagar":"🎵 Música"; if(music)loop();else clearTimeout(mTimer)}
+function loop(){if(!music)return;let t=0;mel.forEach((m,i)=>{setTimeout(()=>{if(music){tone(m,.18,i%3?"sine":"triangle",.043);if(i%4===0)tone(m/2,.24,"sine",.024)}},t);t+=220});mTimer=setTimeout(loop,t+260)}
+function sfx(x){if(!ctx)return;if(x==="good"){tone(523,.12,"triangle",.07);setTimeout(()=>tone(659,.13,"triangle",.07),100);setTimeout(()=>tone(784,.18,"triangle",.07),210)} if(x==="bad"){tone(180,.16,"sawtooth",.05);setTimeout(()=>tone(120,.16,"sawtooth",.04),140)} if(x==="click")tone(520,.07,"square",.035); if(x==="item")tone(880,.12,"triangle",.05)}
+
+// Memoria
+let seq=[],inp=[];
+function startMemory(){const icons=["☕","🍵","🥤","🧇","💪"], len=st.f>=70?4:5;seq=Array.from({length:len},()=>icons[Math.floor(Math.random()*icons.length)]);inp=[];$("seq").innerHTML=seq.map(i=>"<span>"+i+"</span>").join("");$("memBtns").innerHTML="";$("memToast").classList.remove("show");sfx("item");setTimeout(()=>{$("seq").innerHTML="<span>?</span>".repeat(len);$("memBtns").innerHTML=icons.map(i=>'<button onclick="memPress(\''+i+'\')">'+i+'</button>').join("");toast("memToast","Ahora toca en el mismo orden.")},1600)}
+function memPress(i){inp.push(i);sfx("click");let n=inp.length-1;if(i!==seq[n]){stat("f",-8);aura("caos",1);toast("memToast","Fallaste, pero sigues avanzando.");sfx("bad");setTimeout(()=>skipTo(2),1000);seq=[];return}if(inp.length===seq.length){stat("f",12);aura("matcha",3);frag("El Matcha reveló un fragmento.");item("Cristal Matcha");addPts(40,"memoria ganada");toast("memToast","¡Correcto! Fragmento obtenido.");setTimeout(()=>skipTo(2),1000);seq=[]}}
+
+// Catch
+let active=false,caught=0,time=11,catchInt=null;
+function startCatch(){if(active)return;active=true;caught=0;time=11;$("caught").textContent=caught;$("time").textContent=time;$("catchToast").classList.remove("show");spawn();catchInt=setInterval(()=>{time--;$("time").textContent=time;if(time<=0)endCatch()},1000)}
+function spawn(){let a=$("arena");a.innerHTML="";if(!active)return;let b=document.createElement("button");b.className="target";b.textContent="🧇";b.style.left=Math.random()*Math.max(10,a.clientWidth-80)+"px";b.style.top=Math.random()*Math.max(10,a.clientHeight-80)+"px";b.onclick=()=>{caught++;$("caught").textContent=caught;sfx("click");spawn()};a.appendChild(b)}
+function endCatch(){active=false;clearInterval(catchInt);$("arena").innerHTML="";if(caught>=7){stat("e",13);stat("a",7);aura("cafe",3);frag("La arena entregó un fragmento dorado.");item("Syrup Estelar");addPts(40,"caza waffles");toast("catchToast","¡Ganaste! Atrapaste "+caught+".");setTimeout(()=>skipTo(3),1200)}else{stat("e",-6);aura("caos",1);toast("catchToast","Atrapaste "+caught+". Puedes seguir igual.");sfx("bad");setTimeout(()=>skipTo(3),1200)}}
+
+// Brew
+let brew=[];
+function brewPick(x){if(brew.length>=3)return;brew.push(x);$("brewList").innerHTML=brew.map(i=>'<span class="chip">'+i+'</span>').join("");sfx("click")}
+function resetBrew(){brew=[];$("brewList").innerHTML="";$("brewToast").classList.remove("show")}
+function checkBrew(){let ok=JSON.stringify(brew)===JSON.stringify(["Proteína","Café","Waffle"]);if(ok){stat("a",10);stat("e",8);aura("proteina",2);aura("cafe",1);frag("La mezcla correcta abrió otro fragmento.");item("Receta Dorada");addPts(40,"alquimia ganada");toast("brewToast","¡Receta perfecta!");setTimeout(()=>skipTo(4),1000)}else{aura("caos",2);stat("f",-5);toast("brewToast","No era el orden correcto. Intenta otra vez.");sfx("bad")}}
+
+// Timing
+let tInt=null,pos=0,dir=1,timing=false;
+function startTiming(){if(timing)return;timing=true;pos=0;dir=1;$("timingToast").classList.remove("show");tInt=setInterval(()=>{pos+=dir*3.3;if(pos>=100){pos=100;dir=-1}if(pos<=0){pos=0;dir=1}$("marker").style.left=pos+"%"},35)}
+function stopTiming(){if(!timing){toast("timingToast","Primero inicia el marcador.");return}timing=false;clearInterval(tInt);if(pos>=38&&pos<=62){stat("e",10);stat("a",12);aura("proteina",3);frag("La waflera perfecta liberó un fragmento.");item("Waffle Perfecto");addPts(40,"punto perfecto");toast("timingToast","¡Perfecto!");setTimeout(()=>skipTo(5),1000)}else{stat("e",-5);aura("caos",1);toast("timingToast","Fuera de zona. Intenta otra vez.");sfx("bad")}}
+
+// Riddle
+function answerRiddle(ok){if(ok){stat("f",10);stat("a",8);aura("cafe",2);frag("El café abrió la puerta final.");item("Llave del Café");addPts(40,"acertijo");toast("riddleToast","Correcto. El café abre la última puerta.");setTimeout(()=>skipTo(6),1000)}else{stat("f",-5);aura("caos",1);toast("riddleToast","No era. Intenta otra vez.");sfx("bad")}}
+
+// Final
+function finalMode(mode){selectedFinalMode=mode;const labels={power:"Fuerza",wisdom:"Sabiduría",speed:"Velocidad",mercy:"Redención"};toast("finalToast","Modo final elegido: "+labels[mode]);if(mode==="mercy")aura("redencion",2); if(mode==="power")aura("proteina",1); if(mode==="wisdom")aura("matcha",1); if(mode==="speed")aura("cafe",1)}
+function finish(){
+ let p=$("phrase").value.trim();if(!selectedFinalMode){toast("finalToast","Elige primero cómo enfrentar el cierre.");sfx("bad");return}if(p.length<12){toast("finalToast","Escribe una frase final más épica.");sfx("bad");return}
+ let low=p.toLowerCase(), words=["waffle","barra","proteína","proteina","café","cafe","matcha","montemar","campeón","campeon","legendario","comunidad","gnomo","perdón","perdon"];
+ let phrasePower=0;words.forEach(w=>{if(low.includes(w))phrasePower+=2});if(p.length>75)phrasePower+=8;phrasePower=Math.min(phrasePower,28);
+ let total=st.e+st.f+st.a+st.frag*20+phrasePower;
+ let dom=dominantAura(), ending="", prize=true, prizeText="1 Waffle Legendario gratis", title="", text="";
+ const high=total>=265&&st.frag>=5, good=total>=230&&st.frag>=4, lowScore=total<180||st.frag<2;
+
+ if(st.aura.caos>=8 && !high){ending="Caos del Syrup";title="🌪️ Final Caos del Syrup";text="El Syrup Inestable se desbordó por todo el mesón. El Gnomo escapó resbalando entre waffles, y La Barra quedó envuelta en una tormenta dulce. Fue divertido, pero no suficiente para reclamar el premio.";prize=false}
+ else if(selectedFinalMode==="mercy" && st.aura.redencion>=6 && good){ending="Redención del Gnomo";title="🧙 Final Secreto: Redención del Gnomo";text="En vez de destruirlo, invitaste al Gnomo a la mesa. Probó el café, pidió perdón y prometió cuidar la receta. La Barra ganó un nuevo guardián. Este es uno de los finales más especiales.";prizeText="1 Waffle Legendario gratis + título Guardián de La Barra"}
+ else if(high && dom==="cafe" && st.e>=75){ending="Café Supremo";title="☕ Final Café Supremo";text="El aroma del espresso llenó Montemar. Te moviste tan rápido que el Gnomo solo vio una estela de café helado. La receta volvió y el Waffle Legendario despertó con energía total.";prizeText="1 Waffle Legendario gratis"}
+ else if(high && dom==="matcha" && st.f>=75){ending="Matcha Sabio";title="🍵 Final Matcha Sabio";text="No necesitaste gritar. Con calma absoluta ordenaste los fragmentos, entendiste el miedo del Gnomo y activaste la receta con precisión. La waflera brilló en silencio.";prizeText="1 Waffle Legendario gratis"}
+ else if(high && dom==="proteina" && st.a>=75){ending="Bestia Proteica";title="💪 Final Bestia Proteica";text="Con actitud de campeón levantaste el Shaker Dorado y la mesa tembló. El Gnomo se rindió ante la fuerza de La Barra. El Waffle salió enorme, dorado y digno de leyenda.";prizeText="1 Waffle Legendario gratis"}
+ else if(good && dom==="comunidad"){ending="Comunidad Montemar";title="🤝 Final Comunidad Montemar";text="No ganaste solo. Clientes, baristas y héroes unieron fuerzas. La receta volvió porque La Barra no era solo un local: era una comunidad. El Waffle Legendario fue compartido con alegría.";prizeText="1 Waffle Legendario gratis"}
+ else if(high){ending="Waffle Legendario";title="🏆 Final Waffle Legendario";text="Reuniste los fragmentos, resististe las pruebas y derrotaste el Bajón. La waflera ancestral encendió su luz dorada y preparó el Waffle Legendario.";prizeText="1 Waffle Legendario gratis"}
+ else if(lowScore){ending="Bajón Total";title="😴 Final Bajón Total";text="El Gnomo del Bajón ganó esta ronda. Te faltaron fragmentos, energía o enfoque. Pero la leyenda no termina: puedes volver a intentarlo y desbloquear otro final.";prize=false}
+ else {ending="Casi Legendario";title="⚔️ Final Casi Legendario";text="Estuviste muy cerca. La receta brilló, pero faltó poder para completar el ritual. El Gnomo dejó una pista: vuelve a jugar, junta más fragmentos y cuida tu aura.";prize=false}
+
+ st.ending=ending;show("win");$("endTitle").textContent=title;$("endText").innerHTML=text+"<br><br>Puntaje final: <strong>"+total+"</strong> · Fragmentos: <strong>"+st.frag+"/6</strong> · Aura dominante: <strong>"+auraLabel(dom)+"</strong>.";
+ $("coupon").classList.toggle("hide",!prize);$("prizeText").textContent=prizeText;
+ if(prize){let code="WAFFLE-"+Math.floor(1000+Math.random()*9000);st.coupon=code;$("code").textContent=code;saveCoupon(code,ending);addPts(150,"final con premio: "+ending);sfx("good")}else{addPts(35,"final alternativo: "+ending);sfx("bad")}
+ saveEnding(ending);
+}
+function saveEnding(e){let c=client();if(!c)return;if(!c.endings)c.endings=[];c.endings.push({ending:e,date:new Date().toLocaleString("es-CL")});saveDB()}
+function saveCoupon(code,ending){let c=client();if(!c)return;c.coupons.push({code,ending,status:"pendiente",date:new Date().toLocaleString("es-CL")});saveDB()}
+function redeem(){if($("pin").value.trim()!==PIN){alert("PIN incorrecto");sfx("bad");return}$("stamp").style.display="block";let c=client();if(c&&st.coupon){let cp=c.coupons.find(x=>x.code===st.coupon);if(cp){cp.status="canjeado";cp.redeemed=new Date().toLocaleString("es-CL");saveDB()}}addPts(10,"cupón validado");sfx("good")}
+function restart(){reset(false);show("hero")}
+function reset(clearClient=true){st.hero="";st.emoji="✨";st.role="";st.e=50;st.f=50;st.a=50;st.frag=0;st.items=[];st.log=[];st.scene=0;st.coupon=null;st.ending="";st.aura={cafe:0,matcha:0,proteina:0,comunidad:0,caos:0,redencion:0};selectedFinalMode=null;if(clearClient)st.client=null;if(selectedBtn)selectedBtn.classList.remove("sel");selectedBtn=null;if($("phrase"))$("phrase").value="";if($("stamp"))$("stamp").style.display="none";ui()}
+
+// Admin
+function lockAdminPanel(){
+ admin=false;
+ if($("adminLogin")) $("adminLogin").classList.remove("hide");
+ if($("adminPanel")) $("adminPanel").classList.add("hide");
+ if($("adminPin")) $("adminPin").value="";
+ if($("adminToast")) $("adminToast").classList.remove("show");
+ if($("tbody")) $("tbody").innerHTML='<tr><td colspan="9">Panel bloqueado. Ingresa PIN de administrador para ver la base.</td></tr>';
+}
+
+function unlock(){
+ const pin=$("adminPin").value.trim();
+ if(pin!==PIN){
+   admin=false;
+   toast("adminToast","PIN incorrecto. La base de clientes sigue bloqueada.");
+   sfx("bad");
+   return;
+ }
+ admin=true;
+ $("adminLogin").classList.add("hide");
+ $("adminPanel").classList.remove("hide");
+ toast("adminToast","Acceso autorizado. Panel de clientes desbloqueado.");
+ renderCustomers();
+ sfx("good");
+}
+
+function logoutAdmin(){
+ lockAdminPanel();
+ toast("adminToast","Sesión admin cerrada. La base volvió a quedar oculta.");
+}
+
+function renderCustomers(){
+ let tb=$("tbody");if(!tb)return;
+ if(!admin){
+   tb.innerHTML='<tr><td colspan="9">Panel bloqueado. Ingresa PIN de administrador para ver la base.</td></tr>';
+   return;
+ }
+ let q=($("search")?.value||"").toLowerCase();
+ let rows=db.filter(c=>c.name.toLowerCase().includes(q)||(c.contact||"").toLowerCase().includes(q));
+ tb.innerHTML=rows.length?rows.map(c=>{
+   let pend=(c.coupons||[]).filter(x=>x.status==="pendiente").length;
+   let used=(c.coupons||[]).filter(x=>x.status==="canjeado").length;
+   let lastEnd=(c.endings&&c.endings.length)?c.endings[c.endings.length-1].ending:"-";
+   return `<tr>
+     <td><strong>${esc(c.name)}</strong><br><small>${c.id}</small></td>
+     <td>${esc(c.contact||"-")}</td>
+     <td>${c.points}</td>
+     <td>${c.visits}</td>
+     <td>${c.plays}</td>
+     <td>${esc(lastEnd)}<br><small>${(c.endings||[]).length} finales</small></td>
+     <td>${pend} pendientes / ${used} usados</td>
+     <td>${esc(c.last||"-")}</td>
+     <td>
+       <button class="btn ghost" style="padding:8px;font-size:11px" onclick="adminVisit('${c.id}')">+ visita</button>
+       <button class="btn ghost" style="padding:8px;font-size:11px" onclick="adminPts('${c.id}',50)">+50</button>
+       <button class="btn ghost" style="padding:8px;font-size:11px" onclick="adminManualPts('${c.id}')">+ manual</button>
+     </td>
+   </tr>`;
+ }).join(""):'<tr><td colspan="9">Sin clientes registrados.</td></tr>';
+}
+
+function adminVisit(cid){
+ if(!admin){toast("adminToast","Desbloquea con PIN.");return}
+ let c=db.find(x=>x.id===cid);if(!c)return;
+ c.visits++;c.points+=10;c.last=new Date().toLocaleString("es-CL");
+ saveDB();renderCustomers();
+}
+
+function adminPts(cid,pts=50){
+ if(!admin){toast("adminToast","Desbloquea con PIN.");return}
+ let c=db.find(x=>x.id===cid);if(!c)return;
+ c.points+=pts;c.last=new Date().toLocaleString("es-CL");
+ saveDB();renderCustomers();
+}
+
+function adminManualPts(cid){
+ if(!admin){toast("adminToast","Desbloquea con PIN.");return}
+ let pts=parseInt($("manualPoints").value||"0",10);
+ if(!pts){toast("adminToast","Ingresa una cantidad de puntos manuales.");return}
+ adminPts(cid,pts);
+ toast("adminToast","Puntos manuales agregados.");
+}
+
+function exportCSV(){
+ if(!admin){toast("adminToast","Desbloquea con PIN antes de exportar.");return}
+ let rows=[["ID","Nombre","Contacto","Puntos","Visitas","Jugadas","Finales obtenidos","Cupones pendientes","Cupones canjeados","Ultima visita"]];
+ db.forEach(c=>rows.push([
+   c.id,c.name,c.contact||"",c.points,c.visits,c.plays,
+   (c.endings||[]).map(e=>e.ending).join(" | "),
+   (c.coupons||[]).filter(x=>x.status==="pendiente").length,
+   (c.coupons||[]).filter(x=>x.status==="canjeado").length,
+   c.last||""
+ ]));
+ let csv=rows.map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\n");
+ let blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+ let url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="clientes-la-barra-cronicas-waffle.csv";a.click();URL.revokeObjectURL(url);
+ toast("adminToast","CSV exportado correctamente.");
+}
+
+function clearDB(){
+ if(!admin){toast("adminToast","Desbloquea con PIN antes de borrar.");return}
+ let p=prompt("Confirma el PIN staff para borrar la base local:");
+ if(p!==PIN)return alert("PIN incorrecto");
+ if(confirm("¿Borrar toda la base local de clientes de este dispositivo?")){
+   db=[];localStorage.removeItem(DB);st.client=null;renderCustomers();ui();
+   toast("adminToast","Base local borrada.");
+ }
+}
+
+ui();
+lockAdminPanel();
+</script>
+</body>
+</html>
