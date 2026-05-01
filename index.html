@@ -130,13 +130,75 @@ canvas{width:min(100%,690px);height:min(58vh,430px);max-height:430px;border:4px 
   }
 }
 
+
+/* CHAT GLOBAL */
+.chatBox{
+  display:flex;
+  flex-direction:column;
+  height:min(62vh,520px);
+  border:3px solid #fff;
+  background:#030303;
+  margin-top:14px;
+}
+.chatMessages{
+  flex:1;
+  overflow:auto;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.chatMsg{
+  border:2px solid #fff;
+  background:linear-gradient(#111,#050505);
+  padding:9px 10px;
+  font-size:13px;
+  line-height:1.35;
+}
+.chatMsg strong{
+  color:var(--gold);
+  display:block;
+  margin-bottom:3px;
+}
+.chatMsg small{
+  color:#aaa;
+  font-size:11px;
+}
+.chatMsg.hidden{
+  opacity:.45;
+  border-color:#ff8588;
+}
+.chatComposer{
+  border-top:3px solid #fff;
+  padding:10px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  background:#090909;
+}
+.chatComposer input{
+  margin:0;
+}
+.chatNotice{
+  color:var(--cyan);
+  font-size:12px;
+  margin-top:8px;
+  line-height:1.4;
+}
+@media(max-width:960px){
+  .chatBox{height:62vh}
+  .chatComposer{grid-template-columns:1fr}
+  .chatMsg{font-size:12px}
+  .app.battleMode .screen{display:none!important}
+}
+
 </style>
 </head>
 <body>
 <div class="app" id="game">
   <div class="top">
     <div class="brand"><div class="logo">☕</div><div><h1>La Prueba del Americano</h1><p>La Barra Montemar · base online Firebase</p></div></div>
-    <div class="btns"><button class="btn gold" id="musicBtn">Música</button><button class="btn cyan" id="instructionsBtn">Instrucciones</button><button class="btn" id="adminBtn">Admin</button><button class="btn red" id="restartBtn">Reiniciar</button></div>
+    <div class="btns"><button class="btn gold" id="musicBtn">Música</button><button class="btn cyan" id="instructionsBtn">Instrucciones</button><button class="btn" id="adminBtn">Admin</button><button class="btn cyan" id="chatBtn">Chat</button><button class="btn red" id="restartBtn">Reiniciar</button></div>
   </div>
   <div class="layout">
     <aside class="side">
@@ -156,7 +218,7 @@ No se puede jugar sin entregar datos para validación del premio.</div>
     </main>
   </div>
 
-  <section class="screen active" id="intro"><div class="card"><div class="badge">Registro obligatorio</div><h2 class="title">Gana un Americano</h2><p class="text">Para participar debes registrar tus datos. Esta versión guarda la jugada en Firebase Firestore.
+  <section class="screen active" id="intro"><div class="card"><div class="badge">Registro obligatorio</div><h2 class="title">Gana un Americano</h2><p class="text">Para participar debes registrar tus datos. Esta versión guarda la jugada en Firebase Firestore e incluye chat global entre jugadores.
 
 Premio:
 - 1 Café Americano gratis.
@@ -170,14 +232,46 @@ En celular:
 
   <section class="screen" id="final"><div class="card"><div class="badge">Resultado</div><h2 class="title" id="finalTitle">Resultado</h2><p class="text" id="finalText"></p><div id="phraseBox"><input class="input" id="finalPhrase" placeholder="Escribe una frase final sobre La Barra Montemar y el café americano"><div class="btns" style="margin-top:14px"><button class="btn gold" id="sendPhrase">Enviar frase final</button></div><div class="hint">Usa palabras como café, americano, La Barra, Montemar, aroma, energía o Rugmar.</div></div><div class="coupon" id="coupon"><h3>☕ Premio desbloqueado</h3><p><strong>1 Café Americano gratis</strong></p><p>Presenta esta pantalla al equipo de La Barra Montemar.</p><div class="code" id="couponCode">AMERICANO-0000</div><div class="stamp" id="stamp">CUPÓN PENDIENTE DE VALIDACIÓN ADMIN</div><div class="hint">El staff debe entrar al panel Admin para marcar este cupón como canjeado.</div></div><div class="btns" style="margin-top:14px"><button class="btn cyan" id="playAgain">Jugar otra vez</button></div></div></section>
 
-  <section class="screen" id="admin"><div class="card"><div class="badge">Administrador</div><h2 class="title">Base de datos online</h2><p class="text">Ingresa con el usuario administrador creado en Firebase Authentication.</p><div id="adminLogin"><input class="input" id="adminEmail" type="email" placeholder="Email admin"><input class="input" id="adminPass" type="password" placeholder="Contraseña admin"><div class="btns" style="margin-top:14px"><button class="btn gold" id="adminLoginBtn">Entrar</button><button class="btn cyan" id="closeAdminBtn">Volver</button></div></div><div id="adminPanel" style="display:none"><div class="status ok" id="adminUser"></div><div class="btns" style="margin-top:14px"><button class="btn gold" id="refreshAdmin">Actualizar</button><button class="btn cyan" id="exportCsv">Exportar CSV</button><button class="btn" id="adminLogout">Cerrar sesión</button></div><div class="tableWrap"><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Contacto</th><th>Modo</th><th>Resultado</th><th>Puntaje</th><th>HP</th><th>Respeto</th><th>Ánimo</th><th>Cupón</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="adminTable"></tbody></table></div></div><div class="hint" id="adminMsg"></div></div></section>
+
+  <section class="screen" id="chatScreen">
+    <div class="card">
+      <div class="badge">Chat de jugadores</div>
+      <h2 class="title">Sala La Barra</h2>
+      <p class="text">Chat global para jugadores del desafío. Solo se muestra el nombre del jugador; el contacto no aparece públicamente.</p>
+      <div class="chatBox">
+        <div class="chatMessages" id="chatMessages">
+          <div class="hint">Cargando chat...</div>
+        </div>
+        <div class="chatComposer">
+          <input class="input" id="chatInput" maxlength="180" placeholder="Escribe un mensaje para otros jugadores...">
+          <button class="btn gold" id="sendChat">Enviar</button>
+        </div>
+      </div>
+      <div class="chatNotice" id="chatNotice">Máximo 180 caracteres. Evita datos personales o mensajes ofensivos.</div>
+      <div class="btns" style="margin-top:14px">
+        <button class="btn cyan" id="closeChat">Volver al juego</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="admin"><div class="card"><div class="badge">Administrador</div><h2 class="title">Base de datos online</h2><p class="text">Ingresa con el usuario administrador creado en Firebase Authentication.</p><div id="adminLogin"><input class="input" id="adminEmail" type="email" placeholder="Email admin"><input class="input" id="adminPass" type="password" placeholder="Contraseña admin"><div class="btns" style="margin-top:14px"><button class="btn gold" id="adminLoginBtn">Entrar</button><button class="btn cyan" id="closeAdminBtn">Volver</button></div></div><div id="adminPanel" style="display:none"><div class="status ok" id="adminUser"></div><div class="btns" style="margin-top:14px"><button class="btn gold" id="refreshAdmin">Actualizar</button><button class="btn cyan" id="exportCsv">Exportar CSV</button><button class="btn" id="adminLogout">Cerrar sesión</button></div><div class="tableWrap"><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Contacto</th><th>Modo</th><th>Resultado</th><th>Puntaje</th><th>HP</th><th>Respeto</th><th>Ánimo</th><th>Cupón</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="adminTable"></tbody></table></div>
+        <div class="hint" style="margin-top:14px">Moderación del chat</div>
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr><th>Fecha</th><th>Nombre</th><th>Mensaje</th><th>Estado</th><th>Acción</th></tr>
+            </thead>
+            <tbody id="adminChatTable"></tbody>
+          </table>
+        </div>
+      </div><div class="hint" id="adminMsg"></div></div></section>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
 import { 
-  getFirestore, collection, addDoc, doc, updateDoc, getDocs, query, orderBy, serverTimestamp 
+  getFirestore, collection, addDoc, doc, updateDoc, getDocs, query, orderBy, limit, onSnapshot, serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 import { 
   getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged 
@@ -208,6 +302,9 @@ let touchTarget = null;
 
 let firebaseReady = false;
 let adminRows = [];
+let adminChatRows = [];
+let unsubscribeChat = null;
+let lastChatSentAt = 0;
 let state = {};
 let player = {x:345,y:215,r:8};
 let bullets = [];
@@ -566,10 +663,101 @@ function drawBullet(b){ctx.save();ctx.translate(b.x,b.y);const vr=IS_MOBILE?b.r*
 function drawHeart(x,y){ctx.save();ctx.translate(x,y);if(IS_MOBILE)ctx.scale(1.55,1.55);ctx.fillStyle="#ff3333";ctx.beginPath();ctx.moveTo(0,9);ctx.bezierCurveTo(-18,-5,-10,-18,0,-8);ctx.bezierCurveTo(10,-18,18,-5,0,9);ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();ctx.restore()}
 function makeParticles(x,y,color,count){for(let i=0;i<count;i++)particles.push({x,y,vx:(Math.random()-.5)*5,vy:(Math.random()-.5)*5,life:20,color})}
 
+
+function openChat(){
+  $("chatScreen").classList.add("active");
+  startChatListener();
+}
+function closeChat(){
+  $("chatScreen").classList.remove("active");
+}
+function cleanChatMessage(message){
+  return String(message || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 180);
+}
+function hasBlockedWords(message){
+  const m = message.toLowerCase();
+  const blocked = ["http://","https://","www.","puta","conchetumare","ctm","maricon","maricón","weon culiao","culiao"];
+  return blocked.some(w => m.includes(w));
+}
+function publicPlayerName(){
+  const n = (state && state.name ? state.name : "").trim();
+  return n || "Jugador La Barra";
+}
+function startChatListener(){
+  if(unsubscribeChat) return;
+  const chatRef = collection(db, "chatGlobal");
+  const qChat = query(chatRef, orderBy("createdAt","desc"), limit(35));
+  unsubscribeChat = onSnapshot(qChat, snap => {
+    const rows = [];
+    snap.forEach(d => rows.push({id:d.id, ...d.data()}));
+    renderChat(rows.reverse());
+  }, err => {
+    console.error(err);
+    $("chatMessages").innerHTML = '<div class="hint">No se pudo cargar el chat. Revisa las reglas de Firestore.</div>';
+  });
+}
+function renderChat(rows){
+  const box = $("chatMessages");
+  const visible = rows.filter(r => r.status !== "oculto");
+  if(!visible.length){
+    box.innerHTML = '<div class="hint">Todavía no hay mensajes. Sé el primero en escribir.</div>';
+    return;
+  }
+  box.innerHTML = visible.map(r => {
+    return `<div class="chatMsg">
+      <strong>${esc(r.name || "Jugador")}</strong>
+      <div>${esc(r.message || "")}</div>
+      <small>${esc(r.createdAtText || "")}</small>
+    </div>`;
+  }).join("");
+  box.scrollTop = box.scrollHeight;
+}
+async function sendChatMessage(){
+  const input = $("chatInput");
+  let msg = cleanChatMessage(input.value);
+  if(!msg){
+    $("chatNotice").textContent = "Escribe un mensaje antes de enviar.";
+    return;
+  }
+  if(msg.length < 2){
+    $("chatNotice").textContent = "El mensaje es demasiado corto.";
+    return;
+  }
+  if(hasBlockedWords(msg)){
+    $("chatNotice").textContent = "Mensaje bloqueado por moderación básica.";
+    return;
+  }
+  const nowMs = Date.now();
+  if(nowMs - lastChatSentAt < 4500){
+    $("chatNotice").textContent = "Espera unos segundos antes de enviar otro mensaje.";
+    return;
+  }
+  try{
+    const user = await ensureAuth();
+    await addDoc(collection(db, "chatGlobal"), {
+      playerUid: user.uid,
+      name: publicPlayerName(),
+      message: msg,
+      status: "visible",
+      createdAt: serverTimestamp(),
+      createdAtText: nowText()
+    });
+    lastChatSentAt = nowMs;
+    input.value = "";
+    $("chatNotice").textContent = "Mensaje enviado.";
+  }catch(e){
+    console.error(e);
+    $("chatNotice").textContent = "No se pudo enviar. Revisa Firebase Rules.";
+  }
+}
+
 async function openAdmin(){
   $("admin").classList.add("active");
   $("adminMsg").textContent="";
-  if(auth.currentUser && !auth.currentUser.isAnonymous){showAdminPanel(auth.currentUser); await renderAdmin();}
+  if(auth.currentUser && !auth.currentUser.isAnonymous){showAdminPanel(auth.currentUser); await renderAdmin(); await renderAdminChat();}
   else {showAdminLogin();}
 }
 function closeAdmin(){$("admin").classList.remove("active")}
@@ -584,6 +772,7 @@ async function adminLogin(){
     showAdminPanel(cred.user);
     $("adminMsg").textContent="Admin conectado.";
     await renderAdmin();
+    await renderAdminChat();
   }catch(e){
     console.error(e);
     $("adminMsg").textContent="No se pudo iniciar sesión. Revisa usuario, contraseña, Auth y Authorized domains.";
@@ -626,10 +815,61 @@ async function redeemAdmin(id){
   try{
     await updateDoc(doc(db,"jugadas",id), {couponStatus:"canjeado", redeemedAt: serverTimestamp(), redeemedAtText: nowText()});
     await renderAdmin();
+    await renderAdminChat();
   }catch(e){
     console.error(e); alert("No se pudo canjear. Revisa permisos.");
   }
 }
+
+async function renderAdminChat(){
+  if(!auth.currentUser || auth.currentUser.isAnonymous) return;
+  const body = $("adminChatTable");
+  if(!body) return;
+  body.innerHTML = '<tr><td colspan="5">Cargando chat...</td></tr>';
+  try{
+    const qChat = query(collection(db,"chatGlobal"), orderBy("createdAt","desc"), limit(60));
+    const snap = await getDocs(qChat);
+    adminChatRows = [];
+    body.innerHTML = "";
+    if(snap.empty){
+      body.innerHTML = '<tr><td colspan="5">Sin mensajes.</td></tr>';
+      return;
+    }
+    snap.forEach(d => {
+      const data = d.data();
+      adminChatRows.push({id:d.id, ...data});
+      const hidden = data.status === "oculto";
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${esc(data.createdAtText || "-")}</td>
+        <td>${esc(data.name || "Jugador")}</td>
+        <td>${esc(data.message || "")}</td>
+        <td>${esc(data.status || "visible")}</td>
+        <td><button class="smallbtn" data-chatid="${d.id}" data-action="${hidden ? "mostrar" : "ocultar"}">${hidden ? "Mostrar" : "Ocultar"}</button></td>`;
+      body.appendChild(row);
+    });
+    body.querySelectorAll("button[data-chatid]").forEach(btn=>{
+      btn.addEventListener("click",()=>moderateChat(btn.dataset.chatid, btn.dataset.action));
+    });
+  }catch(e){
+    console.error(e);
+    body.innerHTML = '<tr><td colspan="5">No se pudo cargar el chat. Revisa reglas y login admin.</td></tr>';
+  }
+}
+async function moderateChat(id, action){
+  if(!auth.currentUser || auth.currentUser.isAnonymous) return;
+  try{
+    await updateDoc(doc(db,"chatGlobal",id), {
+      status: action === "mostrar" ? "visible" : "oculto",
+      moderatedAt: serverTimestamp(),
+      moderatedAtText: nowText()
+    });
+    await renderAdminChat();
+  }catch(e){
+    console.error(e);
+    alert("No se pudo moderar el mensaje.");
+  }
+}
+
 function exportCSV(){
   if(!adminRows.length){alert("No hay datos cargados.");return}
   const rows=[["Fecha","Nombre","Contacto","Modo","Resultado","Puntaje","HP","Respeto","Animo","Cupon","Estado Cupon"]];
@@ -671,6 +911,7 @@ function sfx(type){if(!audioCtx)return;if(type==="start"){tone(262,.1);setTimeou
 $("musicBtn").addEventListener("click",toggleMusic);
 $("instructionsBtn").addEventListener("click",()=>openScreen("intro"));
 $("adminBtn").addEventListener("click",openAdmin);
+$("chatBtn").addEventListener("click",openChat);
 $("restartBtn").addEventListener("click",restart);
 $("startNormal").addEventListener("click",()=>startGame("normal"));
 $("startDificil").addEventListener("click",()=>startGame("dificil"));
@@ -680,9 +921,12 @@ $("actConcentrar").addEventListener("click",()=>chooseAction("concentrar"));
 $("actPiedad").addEventListener("click",()=>chooseAction("piedad"));
 $("sendPhrase").addEventListener("click",judgePhrase);
 $("playAgain").addEventListener("click",restart);
+$("sendChat").addEventListener("click",sendChatMessage);
+$("closeChat").addEventListener("click",closeChat);
+$("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChatMessage();});
 $("adminLoginBtn").addEventListener("click",adminLogin);
 $("closeAdminBtn").addEventListener("click",closeAdmin);
-$("refreshAdmin").addEventListener("click",renderAdmin);
+$("refreshAdmin").addEventListener("click",async()=>{await renderAdmin(); await renderAdminChat();});
 $("exportCsv").addEventListener("click",exportCSV);
 $("adminLogout").addEventListener("click",adminLogout);
 
@@ -695,7 +939,7 @@ onAuthStateChanged(auth, user=>{
 
 async function init(){
   resetGame(); updateUI(); setStatus("Conectando a Firebase...", "warn");
-  try{await ensureAuth(); firebaseReady=true; setStatus("Firebase listo. Registro online disponible.", "ok");}
+  try{await ensureAuth(); firebaseReady=true; setStatus("Firebase listo. Registro online disponible.", "ok"); startChatListener();}
   catch(e){console.error(e); setStatus("Error: activa Authentication Anonymous y revisa dominios autorizados.", "bad");}
 }
 init();
