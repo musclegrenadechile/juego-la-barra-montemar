@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>La Barra Montemar · Prueba del Americano</title>
+<title>La Barra Montemar · Prueba del Americano Firebase</title>
 <style>
 :root{--bg:#050505;--w:#fff;--gold:#ffd166;--orange:#ff8a00;--cyan:#72f6ff;--red:#ff5d5d;--green:#7dff9b;--cream:#fff1c9}
 *{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}
@@ -19,6 +19,7 @@ h1{font-size:clamp(22px,3.5vw,40px);line-height:.95;color:var(--cream);text-shad
 .row{display:flex;gap:12px;align-items:center}.av{width:58px;height:58px;border:3px solid #fff;border-radius:13px;display:grid;place-items:center;font-size:28px;background:linear-gradient(135deg,#111,#351907)}.meta strong{display:block;color:var(--cream);font-size:17px}.meta small{display:block;color:#bbb;font-size:12px;margin-top:4px}
 .sl{display:flex;justify-content:space-between;font-size:12px;font-weight:900;margin:10px 0 6px}.bar{height:16px;border:2px solid #fff;background:#000;overflow:hidden}.bar span{display:block;height:100%;width:0}#hpBar{background:linear-gradient(90deg,var(--red),#ffb347,var(--green))}#focusBar{background:linear-gradient(90deg,#467dff,var(--cyan))}#moodBar{background:linear-gradient(90deg,#c79bff,var(--cyan),var(--green))}
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini{border:2px solid #fff;background:#050505;text-align:center;padding:10px}.mini strong{display:block;color:var(--gold);font-size:22px}.mini span{display:block;color:#ccc;font-size:11px;margin-top:4px;text-transform:uppercase}.log{max-height:185px;overflow:auto;color:#ddd;font-size:12px;line-height:1.45}.log div{padding:6px 0;border-bottom:1px dashed #ffffff33}
+.status{font-size:12px;color:#ddd;line-height:1.4}.ok{color:var(--green)}.warn{color:var(--gold)}.bad{color:#ff9898}
 .main{display:grid;grid-template-rows:auto 1fr auto;gap:12px;padding:12px;min-height:0}.dialog{min-height:116px;border:3px solid #fff;background:linear-gradient(#131313,#070707);box-shadow:inset 0 0 0 2px #000;padding:14px 16px;white-space:pre-line;font-size:clamp(15px,2vw,19px);line-height:1.55;position:relative}.dialog:before{content:"MENSAJE";position:absolute;top:-12px;left:14px;background:#000;padding:0 8px;color:var(--cyan);font-size:12px;font-weight:900}
 .stage{border:3px solid #fff;background:radial-gradient(circle at 50% 42%,#ff8a0018,transparent 28%),linear-gradient(#0c0c0c,#050505);position:relative;overflow:hidden}.boss,.battle{position:absolute;inset:0;display:grid;place-items:center}.battle{display:none;padding:14px}.boss{padding:18px}.bw{width:min(100%,830px);display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:center}
 .gobcard{height:330px;border:3px solid #fff;background:linear-gradient(#111,#17110b);display:grid;place-items:center;position:relative;box-shadow:0 0 0 3px #000,0 0 36px #ff8a0028}.gobcard:before{content:"RUGMAR";position:absolute;top:-12px;left:18px;background:#000;padding:0 8px;color:var(--gold);font-size:12px;font-weight:900}
@@ -27,7 +28,8 @@ h1{font-size:clamp(22px,3.5vw,40px);line-height:.95;color:var(--cream);text-shad
 .battleWrap{width:min(100%,760px);display:flex;flex-direction:column;align-items:center;gap:12px}.bh{width:100%;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.hud{border:2px solid #fff;background:#000;padding:7px 10px;font-size:12px;font-weight:900;text-transform:uppercase}.hud strong{color:var(--cream)}
 canvas{width:min(100%,690px);height:min(58vh,430px);max-height:430px;border:4px solid #fff;background:#000;image-rendering:pixelated;box-shadow:0 0 0 4px #000;touch-action:none}.mc{display:none;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}.dpad{display:grid;grid-template-columns:58px 58px 58px;grid-template-rows:48px 48px 48px;gap:6px}.dpad button,.tip{border:2px solid #fff;background:#000;color:#fff;font-weight:900}.dpad button{font-size:20px}.empty{visibility:hidden}.tips{display:flex;flex-direction:column;gap:8px}.tip{padding:12px 14px;font-size:12px}
 .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.act{border:3px solid var(--gold);background:linear-gradient(#140d06,#050505);color:#ffe19a;padding:14px 10px;font-size:17px;font-weight:900;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 0 #765800,inset 0 0 0 2px #000}.act span{display:block;margin-top:4px;color:#fff6da9e;font-size:11px}.act:hover{background:linear-gradient(var(--gold),#fff1b5);color:#000;transform:translateY(-2px)}.act:hover span{color:#221000}
-.screen{display:none;position:absolute;inset:0;z-index:30;overflow:auto;background:linear-gradient(#0a0a0af7,#030303f7);padding:18px}.screen.active{display:block}.card{width:min(100%,930px);margin:22px auto;border:3px solid #fff;background:linear-gradient(#141414,#070707);padding:18px;box-shadow:0 0 0 4px #000,0 20px 70px #000}.badge{display:inline-block;border:2px solid var(--cyan);color:var(--cyan);padding:6px 10px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}.title{color:var(--cream);text-shadow:0 3px 0 #5b2700;font-size:clamp(32px,6vw,60px);line-height:.98;margin-bottom:14px}.text{color:#eee;font-size:17px;line-height:1.65;white-space:pre-line}.infogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.ic{border:2px solid #fff;background:#070707;padding:12px}.ic strong{display:block;color:var(--gold);font-size:17px;margin-bottom:6px}.ic p{font-size:13px;color:#ddd;line-height:1.45}.input{width:100%;margin-top:12px;padding:14px;border:3px solid #fff;background:#000;color:#fff;font-family:inherit;font-size:16px;outline:0}.input:focus{border-color:var(--gold);box-shadow:0 0 24px #ffd16640}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.choice{border:3px solid #fff;background:#000;color:#fff;text-align:left;padding:14px;cursor:pointer}.choice strong{display:block;color:var(--cream);font-size:19px;margin-bottom:6px}.choice small{display:block;color:#d5d5d5;font-size:13px;line-height:1.45}.choice:hover{background:#fff;color:#000;transform:translateY(-2px)}.choice:hover strong,.choice:hover small{color:#000}.hint{color:var(--cyan);margin-top:10px;font-size:13px;line-height:1.45}.err{display:none;color:#ff9393;font-weight:900;margin-top:10px;font-size:13px}.coupon{display:none;margin-top:18px;background:linear-gradient(#fff5d3,#ffe29d);color:#2f1303;border:4px dashed var(--orange);padding:18px}.coupon h3{color:#d85d00;font-size:34px}.code{margin-top:12px;background:#2a1205;color:var(--gold);padding:16px;border:3px solid #7d4e1d;text-align:center;font-size:28px;font-weight:900;letter-spacing:2px}.stamp{display:none;margin-top:12px;background:#0b6d31;color:white;border:3px solid #083f1d;padding:12px;text-align:center;font-weight:900}.tableWrap{margin-top:16px;overflow:auto;border:3px solid #fff}table{width:100%;border-collapse:collapse;min-width:900px;background:#050505}th,td{padding:10px;border-bottom:1px solid #ffffff40;text-align:left;font-size:13px}th{color:var(--cream);background:#111;position:sticky;top:0}
+.screen{display:none;position:absolute;inset:0;z-index:30;overflow:auto;background:linear-gradient(#0a0a0af7,#030303f7);padding:18px}.screen.active{display:block}.card{width:min(100%,930px);margin:22px auto;border:3px solid #fff;background:linear-gradient(#141414,#070707);padding:18px;box-shadow:0 0 0 4px #000,0 20px 70px #000}.badge{display:inline-block;border:2px solid var(--cyan);color:var(--cyan);padding:6px 10px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}.title{color:var(--cream);text-shadow:0 3px 0 #5b2700;font-size:clamp(32px,6vw,60px);line-height:.98;margin-bottom:14px}.text{color:#eee;font-size:17px;line-height:1.65;white-space:pre-line}.infogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.ic{border:2px solid #fff;background:#070707;padding:12px}.ic strong{display:block;color:var(--gold);font-size:17px;margin-bottom:6px}.ic p{font-size:13px;color:#ddd;line-height:1.45}.input{width:100%;margin-top:12px;padding:14px;border:3px solid #fff;background:#000;color:#fff;font-family:inherit;font-size:16px;outline:0}.input:focus{border-color:var(--gold);box-shadow:0 0 24px #ffd16640}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.choice{border:3px solid #fff;background:#000;color:#fff;text-align:left;padding:14px;cursor:pointer}.choice strong{display:block;color:var(--cream);font-size:19px;margin-bottom:6px}.choice small{display:block;color:#d5d5d5;font-size:13px;line-height:1.45}.choice:hover{background:#fff;color:#000;transform:translateY(-2px)}.choice:hover strong,.choice:hover small{color:#000}.hint{color:var(--cyan);margin-top:10px;font-size:13px;line-height:1.45}.err{display:none;color:#ff9393;font-weight:900;margin-top:10px;font-size:13px}.coupon{display:none;margin-top:18px;background:linear-gradient(#fff5d3,#ffe29d);color:#2f1303;border:4px dashed var(--orange);padding:18px}.coupon h3{color:#d85d00;font-size:34px}.code{margin-top:12px;background:#2a1205;color:var(--gold);padding:16px;border:3px solid #7d4e1d;text-align:center;font-size:28px;font-weight:900;letter-spacing:2px}.stamp{display:none;margin-top:12px;background:#0b6d31;color:white;border:3px solid #083f1d;padding:12px;text-align:center;font-weight:900}.tableWrap{margin-top:16px;overflow:auto;border:3px solid #fff}table{width:100%;border-collapse:collapse;min-width:1100px;background:#050505}th,td{padding:10px;border-bottom:1px solid #ffffff40;text-align:left;font-size:13px}th{color:var(--cream);background:#111;position:sticky;top:0}
+.smallbtn{border:2px solid #fff;background:#000;color:#fff;padding:7px 9px;font-weight:900;cursor:pointer}.smallbtn:hover{background:#fff;color:#000}
 .flash{animation:flash .22s linear 1}@keyframes flash{0%{filter:brightness(1)}40%{filter:brightness(2)}100%{filter:brightness(1)}}.shake{animation:shake .22s linear 1}@keyframes shake{0%{transform:translate(0,0)}25%{transform:translate(-6px,1px)}50%{transform:translate(5px,-1px)}75%{transform:translate(-4px,2px)}100%{transform:translate(0,0)}}
 @media(max-width:960px){body{padding:0}.app{height:100vh;width:100%;border:0;box-shadow:none}.layout{grid-template-columns:1fr}.side{display:none}.bw{grid-template-columns:1fr}.gobcard{height:260px}.info{max-height:245px;overflow:auto}.phases{grid-template-columns:1fr}.actions{grid-template-columns:repeat(2,1fr)}.mc{display:flex}canvas{height:48vh}.choices,.infogrid{grid-template-columns:1fr}}
 </style>
@@ -35,11 +37,12 @@ canvas{width:min(100%,690px);height:min(58vh,430px);max-height:430px;border:4px 
 <body>
 <div class="app" id="game">
   <div class="top">
-    <div class="brand"><div class="logo">☕</div><div><h1>La Prueba del Americano</h1><p>La Barra Montemar · desafío oficial</p></div></div>
-    <div class="btns"><button class="btn gold" id="musicBtn" onclick="toggleMusic()">Música</button><button class="btn cyan" onclick="openScreen('intro')">Instrucciones</button><button class="btn" onclick="openAdmin()">Admin</button><button class="btn red" onclick="restart()">Reiniciar</button></div>
+    <div class="brand"><div class="logo">☕</div><div><h1>La Prueba del Americano</h1><p>La Barra Montemar · base online Firebase</p></div></div>
+    <div class="btns"><button class="btn gold" id="musicBtn">Música</button><button class="btn cyan" id="instructionsBtn">Instrucciones</button><button class="btn" id="adminBtn">Admin</button><button class="btn red" id="restartBtn">Reiniciar</button></div>
   </div>
   <div class="layout">
     <aside class="side">
+      <div class="panel"><div class="pt">Estado Firebase</div><div class="status" id="fbStatus">Conectando...</div></div>
       <div class="panel"><div class="pt">Jugador registrado</div><div class="row"><div class="av">❤</div><div class="meta"><strong id="nameBox">Sin registrar</strong><small id="contactBox">Registro obligatorio</small></div></div><div class="sl"><span>Vida</span><span id="hpTxt">22 / 22</span></div><div class="bar"><span id="hpBar" style="width:100%"></span></div><div class="sl"><span>Concentración</span><span id="focusTxt">0%</span></div><div class="bar"><span id="focusBar"></span></div><div class="sl"><span>Ánimo de Rugmar</span><span id="moodTxt">0 / 14</span></div><div class="bar"><span id="moodBar"></span></div></div>
       <div class="panel"><div class="pt">Partida</div><div class="sg"><div class="mini"><strong id="phaseTxt">0 / 8</strong><span>Fase</span></div><div class="mini"><strong id="scoreTxt">0</strong><span>Puntos</span></div><div class="mini"><strong id="respectTxt">0</strong><span>Respeto</span></div><div class="mini"><strong id="comboTxt">x1</strong><span>Combo</span></div></div></div>
       <div class="panel"><div class="pt">Bitácora</div><div class="log" id="log"></div></div>
@@ -48,64 +51,471 @@ canvas{width:min(100%,690px);height:min(58vh,430px);max-height:430px;border:4px 
       <div class="dialog" id="dialogue">Completa el registro para iniciar la prueba.
 No se puede jugar sin entregar datos para validación del premio.</div>
       <div class="stage">
-        <div class="boss" id="bossScene"><div class="bw"><div class="gobcard"><div class="gob"><div class="ear l"></div><div class="ear r"></div><div class="head"><div class="hair"></div><div class="brow l"></div><div class="brow r"></div><div class="eye l"></div><div class="eye r"></div><div class="nose"></div><div class="mouth"></div></div><div class="body"></div><div class="arm l"></div><div class="arm r"></div><div class="apron"><div class="lb">LB</div></div><div class="cup"></div><div class="leg l"></div><div class="leg r"></div></div></div><div class="info"><div class="bt">RUGMAR, EL GOBLIN DEL AMERICANO</div><div class="btxt">Rugmar custodia el café americano de La Barra Montemar. No entrega premios por suerte: exige registro, resistencia, concentración y una buena frase final.</div><div class="rules">Para ganar debes superar varias fases, conservar vida suficiente, subir el respeto de Rugmar y completar el desafío final.</div><div class="phases"><div class="phase"><strong>1-2</strong>Lluvia de espresso y vapor.</div><div class="phase"><strong>3-4</strong>Azúcar, granos y diagonales.</div><div class="phase"><strong>5-6</strong>Patrones cruzados y ráfagas.</div><div class="phase"><strong>7-8</strong>Furia final del americano.</div></div></div></div></div>
+        <div class="boss" id="bossScene"><div class="bw"><div class="gobcard"><div class="gob"><div class="ear l"></div><div class="ear r"></div><div class="head"><div class="hair"></div><div class="brow l"></div><div class="brow r"></div><div class="eye l"></div><div class="eye r"></div><div class="nose"></div><div class="mouth"></div></div><div class="body"></div><div class="arm l"></div><div class="arm r"></div><div class="apron"><div class="lb">LB</div></div><div class="cup"></div><div class="leg l"></div><div class="leg r"></div></div></div><div class="info"><div class="bt">RUGMAR, EL GOBLIN DEL AMERICANO</div><div class="btxt">Rugmar custodia el café americano de La Barra Montemar. No entrega premios por suerte: exige registro, resistencia, concentración y una buena frase final.</div><div class="rules">Esta versión guarda cada jugada en Firebase Firestore. El administrador puede revisar los registros y canjear cupones desde el panel privado.</div><div class="phases"><div class="phase"><strong>1-2</strong>Lluvia de espresso y vapor.</div><div class="phase"><strong>3-4</strong>Azúcar, granos y diagonales.</div><div class="phase"><strong>5-6</strong>Patrones cruzados y ráfagas.</div><div class="phase"><strong>7-8</strong>Furia final del americano.</div></div></div></div></div>
         <div class="battle" id="battleScene"><div class="battleWrap"><div class="bh"><div class="hud">Ataque: <strong id="attackTxt">-</strong></div><div class="hud">Tiempo: <strong id="timeTxt">0s</strong></div><div class="hud">Objetivo: <strong>sobrevivir</strong></div></div><canvas id="canvas" width="690" height="430"></canvas><div class="mc"><div class="dpad"><button class="empty"></button><button data-key="up">▲</button><button class="empty"></button><button data-key="left">◀</button><button data-key="down">▼</button><button data-key="right">▶</button><button class="empty"></button><button data-key="slow">●</button><button class="empty"></button></div><div class="tips"><button class="tip" disabled>● = movimiento preciso</button><button class="tip" disabled>Evita café, azúcar, vapor y granos</button></div></div></div></div>
       </div>
-      <div class="actions"><button class="act" onclick="chooseAction('hablar')">Hablar<span>Sube respeto</span></button><button class="act" onclick="chooseAction('preparar')">Preparar<span>Sube puntaje</span></button><button class="act" onclick="chooseAction('concentrar')">Concentrar<span>Mejora control</span></button><button class="act" onclick="chooseAction('piedad')">Piedad<span>Sube ánimo</span></button></div>
+      <div class="actions"><button class="act" id="actHablar">Hablar<span>Sube respeto</span></button><button class="act" id="actPreparar">Preparar<span>Sube puntaje</span></button><button class="act" id="actConcentrar">Concentrar<span>Mejora control</span></button><button class="act" id="actPiedad">Piedad<span>Sube ánimo</span></button></div>
     </main>
   </div>
 
-  <section class="screen active" id="intro"><div class="card"><div class="badge">Registro obligatorio</div><h2 class="title">Gana un Americano</h2><p class="text">Para participar debes registrar tus datos. La base queda guardada en este dispositivo y solo el administrador puede verla.
+  <section class="screen active" id="intro"><div class="card"><div class="badge">Registro obligatorio</div><h2 class="title">Gana un Americano</h2><p class="text">Para participar debes registrar tus datos. Esta versión guarda la jugada en Firebase Firestore.
 
 Premio:
 - 1 Café Americano gratis.
 - El cupón solo aparece si superas la prueba.
-- El staff debe validar el premio con PIN interno.</p><div class="infogrid"><div class="ic"><strong>1. Regístrate</strong><p>Nombre y contacto son obligatorios.</p></div><div class="ic"><strong>2. Juega</strong><p>Supera una prueba larga con varias fases.</p></div><div class="ic"><strong>3. Valida</strong><p>Si ganas, el equipo valida el cupón.</p></div></div><input class="input" id="regName" placeholder="Nombre del jugador *"><input class="input" id="regContact" placeholder="WhatsApp o email *"><div class="err" id="regError"></div><div class="choices"><button class="choice" onclick="startGame('normal')"><strong>Modo Normal</strong><small>8 fases, dificultad progresiva. No es un premio automático.</small></button><button class="choice" onclick="startGame('dificil')"><strong>Modo Difícil</strong><small>Más velocidad, más daño y menor margen de error.</small></button></div></div></section>
+- El staff valida el cupón desde el panel admin.</p><div class="infogrid"><div class="ic"><strong>1. Regístrate</strong><p>Nombre y contacto son obligatorios.</p></div><div class="ic"><strong>2. Juega</strong><p>Supera una prueba larga con varias fases.</p></div><div class="ic"><strong>3. Valida</strong><p>Si ganas, el equipo valida el cupón desde Firebase.</p></div></div><input class="input" id="regName" placeholder="Nombre del jugador *"><input class="input" id="regContact" placeholder="WhatsApp o email *"><div class="err" id="regError"></div><div class="choices"><button class="choice" id="startNormal"><strong>Modo Normal</strong><small>8 fases, dificultad progresiva. No es un premio automático.</small></button><button class="choice" id="startDificil"><strong>Modo Difícil</strong><small>Más velocidad, más daño y menor margen de error.</small></button></div></div></section>
 
-  <section class="screen" id="final"><div class="card"><div class="badge">Resultado</div><h2 class="title" id="finalTitle">Resultado</h2><p class="text" id="finalText"></p><div id="phraseBox"><input class="input" id="finalPhrase" placeholder="Escribe una frase final sobre La Barra Montemar y el café americano"><div class="btns" style="margin-top:14px"><button class="btn gold" onclick="judgePhrase()">Enviar frase final</button></div><div class="hint">Usa palabras como café, americano, La Barra, Montemar, aroma, energía o Rugmar.</div></div><div class="coupon" id="coupon"><h3>☕ Premio desbloqueado</h3><p><strong>1 Café Americano gratis</strong></p><p>Presenta esta pantalla al equipo de La Barra Montemar.</p><div class="code" id="couponCode">AMERICANO-0000</div><input class="input" id="staffPin" type="password" placeholder="PIN staff para canjear"><div class="btns" style="margin-top:14px"><button class="btn gold" onclick="redeem()">Validar premio</button></div><div class="stamp" id="stamp">CANJE AUTORIZADO POR STAFF</div><div class="hint">Promoción válida hasta agotar stock. Un premio por persona.</div></div><div class="btns" style="margin-top:14px"><button class="btn cyan" onclick="restart()">Jugar otra vez</button></div></div></section>
+  <section class="screen" id="final"><div class="card"><div class="badge">Resultado</div><h2 class="title" id="finalTitle">Resultado</h2><p class="text" id="finalText"></p><div id="phraseBox"><input class="input" id="finalPhrase" placeholder="Escribe una frase final sobre La Barra Montemar y el café americano"><div class="btns" style="margin-top:14px"><button class="btn gold" id="sendPhrase">Enviar frase final</button></div><div class="hint">Usa palabras como café, americano, La Barra, Montemar, aroma, energía o Rugmar.</div></div><div class="coupon" id="coupon"><h3>☕ Premio desbloqueado</h3><p><strong>1 Café Americano gratis</strong></p><p>Presenta esta pantalla al equipo de La Barra Montemar.</p><div class="code" id="couponCode">AMERICANO-0000</div><div class="stamp" id="stamp">CUPÓN PENDIENTE DE VALIDACIÓN ADMIN</div><div class="hint">El staff debe entrar al panel Admin para marcar este cupón como canjeado.</div></div><div class="btns" style="margin-top:14px"><button class="btn cyan" id="playAgain">Jugar otra vez</button></div></div></section>
 
-  <section class="screen" id="admin"><div class="card"><div class="badge">Administrador</div><h2 class="title">Base de datos</h2><p class="text">Panel privado. Ingresa PIN para ver clientes, jugadas, resultados y cupones.</p><div id="adminLogin"><input class="input" id="adminPin" type="password" placeholder="PIN administrador"><div class="btns" style="margin-top:14px"><button class="btn gold" onclick="unlockAdmin()">Entrar</button><button class="btn cyan" onclick="closeAdmin()">Volver</button></div></div><div id="adminPanel" style="display:none"><div class="btns" style="margin-top:14px"><button class="btn gold" onclick="exportCSV()">Exportar CSV</button><button class="btn cyan" onclick="renderAdmin()">Actualizar</button><button class="btn red" onclick="clearDB()">Borrar base local</button><button class="btn" onclick="lockAdmin()">Cerrar sesión</button></div><div class="tableWrap"><table><thead><tr><th>Nombre</th><th>Contacto</th><th>Visitas</th><th>Jugadas</th><th>Ganadas</th><th>Cupones</th><th>Último resultado</th><th>Última visita</th></tr></thead><tbody id="adminTable"></tbody></table></div></div><div class="hint" id="adminMsg"></div></div></section>
+  <section class="screen" id="admin"><div class="card"><div class="badge">Administrador</div><h2 class="title">Base de datos online</h2><p class="text">Ingresa con el usuario administrador creado en Firebase Authentication.</p><div id="adminLogin"><input class="input" id="adminEmail" type="email" placeholder="Email admin"><input class="input" id="adminPass" type="password" placeholder="Contraseña admin"><div class="btns" style="margin-top:14px"><button class="btn gold" id="adminLoginBtn">Entrar</button><button class="btn cyan" id="closeAdminBtn">Volver</button></div></div><div id="adminPanel" style="display:none"><div class="status ok" id="adminUser"></div><div class="btns" style="margin-top:14px"><button class="btn gold" id="refreshAdmin">Actualizar</button><button class="btn cyan" id="exportCsv">Exportar CSV</button><button class="btn" id="adminLogout">Cerrar sesión</button></div><div class="tableWrap"><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Contacto</th><th>Modo</th><th>Resultado</th><th>Puntaje</th><th>HP</th><th>Respeto</th><th>Ánimo</th><th>Cupón</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="adminTable"></tbody></table></div></div><div class="hint" id="adminMsg"></div></div></section>
 </div>
-<script>
-const PIN="LABARRA",DB_KEY="laBarraAmericanoDB_v3";
-const canvas=document.getElementById("canvas"),ctx=canvas.getContext("2d"),keys={up:false,down:false,left:false,right:false,slow:false};
-let db=loadDB(),adminUnlocked=false,state={},player={x:345,y:215,r:8},bullets=[],particles=[],stars=[],anim=null,lastTime=0,elapsed=0,lastSpawn=0;
-const attacks=["Lluvia de Espresso","Vapor Lateral","Azúcar Giratoria","Granos Teledirigidos","Cruz del Americano","Tormenta Mixta","Ráfaga de Tazas","Furia Final de Rugmar"];
-function $(id){return document.getElementById(id)}function loadDB(){try{return JSON.parse(localStorage.getItem(DB_KEY))||[]}catch(e){return[]}}function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db))}function now(){return new Date().toLocaleString("es-CL")}function openScreen(id){$(id).classList.add("active")}function closeScreen(id){$(id).classList.remove("active")}function showError(m){$("regError").textContent=m;$("regError").style.display="block"}function clearError(){$("regError").style.display="none";$("regError").textContent=""}function log(m){const d=document.createElement("div");d.textContent=m;$("log").prepend(d)}function setDialogue(m){$("dialogue").textContent=m}function shake(){const g=$("game");g.classList.remove("shake");void g.offsetWidth;g.classList.add("shake")}
-function findOrCreateCustomer(name,contact){const key=contact.trim().toLowerCase();let c=db.find(x=>String(x.contact).toLowerCase()===key);if(!c){c={id:"C"+Date.now(),name,contact,visits:0,plays:0,wins:0,coupons:[],results:[],lastVisit:""};db.push(c)}c.name=name;c.contact=contact;c.visits++;c.lastVisit=now();saveDB();return c}
-function resetGame(){state={customer:null,name:"",contact:"",mode:"normal",hp:22,maxHp:22,focus:0,mood:0,maxMood:14,respect:0,score:0,combo:1,phase:0,maxPhase:8,inBattle:false,waitingAction:false,finalReady:false,won:false,coupon:null,lastResult:""};player={x:345,y:215,r:8};bullets=[];particles=[];stars=[];elapsed=0;lastSpawn=0;cancelAnimationFrame(anim)}
-function restart(){resetGame();updateUI();$("log").innerHTML="";$("coupon").style.display="none";$("stamp").style.display="none";$("phraseBox").style.display="block";$("final").classList.remove("active");$("battleScene").style.display="none";$("bossScene").style.display="grid";setDialogue("Completa el registro para iniciar la prueba.\nNo se puede jugar sin entregar datos para validación del premio.");openScreen("intro")}
-function startGame(mode){clearError();const name=$("regName").value.trim(),contact=$("regContact").value.trim();if(name.length<2){showError("Debes ingresar el nombre del jugador.");return}if(contact.length<6){showError("Debes ingresar WhatsApp o email para validar el premio.");return}resetGame();state.mode=mode;state.name=name;state.contact=contact;state.customer=findOrCreateCustomer(name,contact);state.customer.plays++;state.customer.lastVisit=now();saveDB();if(mode==="dificil"){state.hp=16;state.maxHp=16}closeScreen("intro");state.waitingAction=true;updateUI();log("Registro completo. Inicia la prueba.");setDialogue(name+" entra a La Barra Montemar.\nRugmar golpea el mesón con su taza.\n“Si quieres el Americano, tendrás que ganártelo.”");sfx("start")}
-function updateUI(){$("nameBox").textContent=state.name||"Sin registrar";$("contactBox").textContent=state.contact||"Registro obligatorio";$("hpTxt").textContent=(state.hp||0)+" / "+(state.maxHp||22);$("hpBar").style.width=((state.hp||0)/(state.maxHp||22)*100)+"%";$("focusTxt").textContent=Math.round(state.focus||0)+"%";$("focusBar").style.width=Math.min(100,state.focus||0)+"%";$("moodTxt").textContent=(state.mood||0)+" / "+(state.maxMood||14);$("moodBar").style.width=((state.mood||0)/(state.maxMood||14)*100)+"%";$("phaseTxt").textContent=(state.phase||0)+" / "+(state.maxPhase||8);$("scoreTxt").textContent=state.score||0;$("respectTxt").textContent=state.respect||0;$("comboTxt").textContent="x"+(state.combo||1)}
-function chooseAction(a){if(!state.customer){setDialogue("Primero debes registrarte para jugar.");openScreen("intro");return}if(state.inBattle||state.finalReady||!state.waitingAction)return;if(a==="hablar"){state.respect+=2;state.mood=Math.min(state.maxMood,state.mood+2);state.score+=8;setDialogue("Hablas con Rugmar sobre el café de grano.\nEl goblin gruñe, pero escucha.\nRespeto +2 · Ánimo +2.");log("Hablar: respeto y ánimo suben.")}if(a==="preparar"){state.score+=18*state.combo;state.respect++;state.combo++;setDialogue("Ajustas la extracción del americano.\nEl aroma sube y Rugmar observa con atención.\nPuntaje alto · Combo sube.");log("Preparar: puntaje y combo suben.")}if(a==="concentrar"){state.focus=Math.min(100,state.focus+35);state.score+=6;setDialogue("Respiras y sigues el vapor con la mirada.\nTu movimiento será más preciso en la siguiente fase.");log("Concentrar: control mejorado.")}if(a==="piedad"){state.mood=Math.min(state.maxMood,state.mood+3);state.respect+=3;setDialogue("Le recuerdas a Rugmar que el café también se comparte.\nEl goblin baja un poco la guardia.\nÁnimo +3 · Respeto +3.");log("Piedad: Rugmar se calma.")}updateUI();state.waitingAction=false;setTimeout(startPhase,900)}
-function startPhase(){state.phase++;if(state.phase>state.maxPhase)return endRun(true);state.inBattle=true;$("bossScene").style.display="none";$("battleScene").style.display="grid";$("attackTxt").textContent=attacks[(state.phase-1)%attacks.length];bullets=[];particles=[];stars=[];player.x=canvas.width/2;player.y=canvas.height/2;elapsed=0;lastSpawn=0;lastTime=performance.now();setDialogue("Fase "+state.phase+": "+attacks[(state.phase-1)%attacks.length]+".\nEsquiva hasta que termine el patrón.");log("Fase "+state.phase+" iniciada.");sfx("battle");cancelAnimationFrame(anim);anim=requestAnimationFrame(loop);updateUI()}
-function finishPhase(){state.inBattle=false;$("battleScene").style.display="none";$("bossScene").style.display="grid";bullets=[];particles=[];stars=[];state.score+=Math.max(10,Math.floor(state.hp*1.2))*state.combo;state.focus=Math.max(0,state.focus-25);if(state.hp<=0)return endRun(false);if(state.phase>=state.maxPhase)return endRun(true);state.waitingAction=true;setDialogue("Superaste la fase "+state.phase+".\nRugmar sirve más café en la taza.\nElige tu próxima acción.");log("Fase "+state.phase+" superada.");updateUI();sfx("good")}
-function endRun(survived){state.inBattle=false;state.finalReady=true;cancelAnimationFrame(anim);$("battleScene").style.display="none";$("bossScene").style.display="grid";$("final").classList.add("active");$("coupon").style.display="none";$("phraseBox").style.display=survived?"block":"none";if(!survived){state.lastResult="Derrota";$("finalTitle").textContent="Rugmar ganó";$("finalText").textContent="No lograste superar todas las fases. El americano seguirá bajo custodia de Rugmar.\n\nPuedes volver a intentarlo.";saveResult(false);sfx("lose");return}state.lastResult="Sobrevivió";$("finalTitle").textContent="Prueba final";$("finalText").textContent="Sobreviviste a todas las fases.\n\nAhora escribe una frase final para convencer a Rugmar de entregarte el americano.";sfx("good")}
-function judgePhrase(){const phrase=$("finalPhrase").value.trim();if(phrase.length<40){$("finalText").textContent="La frase es muy corta. Rugmar exige una frase más elaborada para entregar el premio.";sfx("lose");return}const low=phrase.toLowerCase(),words=["café","cafe","americano","barra","la barra","montemar","rugmar","aroma","energía","energia","grano","despertar"];let power=0;words.forEach(w=>{if(low.includes(w))power+=3});if(phrase.length>90)power+=10;const total=state.score+state.hp*8+state.respect*15+state.mood*12+power,needTotal=state.mode==="dificil"?620:520,needHp=state.mode==="dificil"?7:8,needRespect=state.mode==="dificil"?10:8,needMood=state.mode==="dificil"?8:7;if(total>=needTotal&&state.hp>=needHp&&state.respect>=needRespect&&state.mood>=needMood){state.won=true;state.lastResult="Ganó premio";$("finalTitle").textContent="Americano desbloqueado";$("finalText").innerHTML="Rugmar te mira en silencio.<br><br><strong>“Bien. El americano es tuyo.”</strong><br><br>Puntaje final: <strong>"+total+"</strong>";unlockCoupon();saveResult(true);sfx("win")}else{state.lastResult="Casi ganó";$("finalTitle").textContent="Casi lo logras";$("finalText").innerHTML="Sobreviviste, pero no convenciste completamente a Rugmar.<br><br>Puntaje final: <strong>"+total+"</strong>.<br><br>Necesitas más respeto, ánimo, vida y una frase más potente.";$("phraseBox").style.display="none";saveResult(false);sfx("lose")}}
-function unlockCoupon(){const code="AMERICANO-"+Math.floor(1000+Math.random()*9000);state.coupon=code;$("couponCode").textContent=code;$("coupon").style.display="block";$("phraseBox").style.display="none";if(state.customer){state.customer.coupons.push({code,status:"pendiente",date:now()});saveDB()}}
-function redeem(){if($("staffPin").value.trim()!==PIN){alert("PIN incorrecto.");sfx("hit");return}$("stamp").style.display="block";if(state.customer&&state.coupon){const cp=state.customer.coupons.find(c=>c.code===state.coupon);if(cp){cp.status="canjeado";cp.redeemedAt=now()}saveDB()}sfx("win")}
-function saveResult(won){if(!state.customer)return;if(won)state.customer.wins++;state.customer.results.push({result:state.lastResult,mode:state.mode,score:state.score,hp:state.hp,respect:state.respect,mood:state.mood,date:now()});state.customer.lastVisit=now();saveDB()}
-function loop(t){const dt=Math.min(33,t-lastTime);lastTime=t;elapsed+=dt;updateBattle();drawBattle();const dur=state.mode==="dificil"?18000:16500;$("timeTxt").textContent=Math.max(0,Math.ceil((dur-elapsed)/1000))+"s";if(elapsed>=dur){finishPhase();return}anim=requestAnimationFrame(loop)}
-function updateBattle(){let speed=state.focus>0?4.2:3.5;if(keys.slow)speed*=.58;if(keys.up)player.y-=speed;if(keys.down)player.y+=speed;if(keys.left)player.x-=speed;if(keys.right)player.x+=speed;player.x=Math.max(28,Math.min(canvas.width-28,player.x));player.y=Math.max(28,Math.min(canvas.height-28,player.y));const diff=state.mode==="dificil"?1.35:1,interval=Math.max(115,330-state.phase*22)/diff;if(elapsed-lastSpawn>interval){spawnPattern();lastSpawn=elapsed}bullets.forEach(b=>{b.x+=b.vx*diff;b.y+=b.vy*diff;b.life--;if(b.spin)b.a+=.12;if(b.wave)b.y+=Math.sin((elapsed+b.seed)/120)*b.wave});bullets=bullets.filter(b=>b.life>0&&b.x>-80&&b.x<canvas.width+80&&b.y>-80&&b.y<canvas.height+80);for(const b of bullets){const dx=b.x-player.x,dy=b.y-player.y;if(Math.sqrt(dx*dx+dy*dy)<b.r+player.r){b.life=0;damage(b.dmg||1);makeParticles(player.x,player.y,"#ff5a5f",12);break}}particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--});particles=particles.filter(p=>p.life>0);stars.forEach(s=>{s.y+=s.vy;s.life--});stars=stars.filter(s=>s.life>0)}
-function spawnPattern(){const p=state.phase;if(p===1)spawnRain();else if(p===2)spawnSteam();else if(p===3)spawnSugar();else if(p===4)spawnBeans();else if(p===5)spawnCross();else if(p===6){spawnRain();spawnSteam()}else if(p===7){spawnSugar();spawnBeans()}else{spawnRain();spawnSteam();spawnCross()}for(let i=0;i<2;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vy:.3+Math.random(),life:45,color:Math.random()<.5?"#ffd166":"#71f6ff"})}
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
+import { 
+  getFirestore, collection, addDoc, doc, updateDoc, getDocs, query, orderBy, serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { 
+  getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAyAeUWK-CjJFiPSooHBs9XDd3gk8_X_Fs",
+  authDomain: "la-barra-americano.firebaseapp.com",
+  projectId: "la-barra-americano",
+  storageBucket: "la-barra-americano.firebasestorage.app",
+  messagingSenderId: "1302035343",
+  appId: "1:1302035343:web:2de00418b3d24e5687a9fa",
+  measurementId: "G-QFVF61XZRL"
+};
+
+const app = initializeApp(firebaseConfig);
+try { getAnalytics(app); } catch(e) {}
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const keys = {up:false,down:false,left:false,right:false,slow:false};
+
+let firebaseReady = false;
+let adminRows = [];
+let state = {};
+let player = {x:345,y:215,r:8};
+let bullets = [];
+let particles = [];
+let stars = [];
+let anim = null;
+let lastTime = 0;
+let elapsed = 0;
+let lastSpawn = 0;
+let currentDocId = null;
+let currentDocRef = null;
+
+const attacks = ["Lluvia de Espresso","Vapor Lateral","Azúcar Giratoria","Granos Teledirigidos","Cruz del Americano","Tormenta Mixta","Ráfaga de Tazas","Furia Final de Rugmar"];
+
+function $(id){return document.getElementById(id)}
+function setStatus(text, cls="warn"){$("fbStatus").className="status "+cls;$("fbStatus").textContent=text}
+function openScreen(id){$(id).classList.add("active")}
+function closeScreen(id){$(id).classList.remove("active")}
+function showError(m){$("regError").textContent=m;$("regError").style.display="block"}
+function clearError(){$("regError").style.display="none";$("regError").textContent=""}
+function log(m){const d=document.createElement("div");d.textContent=m;$("log").prepend(d)}
+function setDialogue(m){$("dialogue").textContent=m}
+function shake(){const g=$("game");g.classList.remove("shake");void g.offsetWidth;g.classList.add("shake")}
+function nowText(){return new Date().toLocaleString("es-CL")}
+function esc(s){return String(s ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+
+async function ensureAuth(){
+  if(auth.currentUser) return auth.currentUser;
+  const cred = await signInAnonymously(auth);
+  return cred.user;
+}
+
+async function createPlayDoc(){
+  const user = await ensureAuth();
+  currentDocRef = await addDoc(collection(db, "jugadas"), {
+    playerUid: user.uid,
+    name: state.name,
+    contact: state.contact,
+    mode: state.mode,
+    result: "En juego",
+    phase: 0,
+    score: 0,
+    hp: state.hp,
+    respect: 0,
+    mood: 0,
+    couponCode: "",
+    couponStatus: "",
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+    createdAtText: nowText()
+  });
+  currentDocId = currentDocRef.id;
+}
+
+async function updatePlay(fields){
+  if(!currentDocRef) return;
+  try {
+    await updateDoc(currentDocRef, {...fields, updatedAt: serverTimestamp(), updatedAtText: nowText()});
+  } catch(e) {
+    console.warn("No se pudo actualizar Firestore", e);
+    setStatus("Firebase conectado, pero falló una actualización. Revisa Rules.", "bad");
+  }
+}
+
+function resetGame(){
+  state = {
+    name:"",contact:"",mode:"normal",
+    hp:22,maxHp:22,focus:0,mood:0,maxMood:14,respect:0,score:0,combo:1,
+    phase:0,maxPhase:8,inBattle:false,waitingAction:false,finalReady:false,won:false,coupon:null,lastResult:""
+  };
+  player = {x:345,y:215,r:8};
+  bullets=[];particles=[];stars=[];elapsed=0;lastSpawn=0;currentDocId=null;currentDocRef=null;
+  cancelAnimationFrame(anim);
+}
+
+function restart(){
+  resetGame();
+  updateUI();
+  $("log").innerHTML="";
+  $("coupon").style.display="none";
+  $("stamp").style.display="none";
+  $("phraseBox").style.display="block";
+  $("final").classList.remove("active");
+  $("battleScene").style.display="none";
+  $("bossScene").style.display="grid";
+  setDialogue("Completa el registro para iniciar la prueba.\\nNo se puede jugar sin entregar datos para validación del premio.");
+  openScreen("intro");
+}
+
+async function startGame(mode){
+  clearError();
+  const name=$("regName").value.trim(), contact=$("regContact").value.trim();
+  if(name.length<2){showError("Debes ingresar el nombre del jugador.");return}
+  if(contact.length<6){showError("Debes ingresar WhatsApp o email para validar el premio.");return}
+  if(!firebaseReady){showError("Firebase aún no está listo. Revisa que Authentication y Firestore estén activados.");return}
+
+  resetGame();
+  state.mode=mode; state.name=name; state.contact=contact;
+  if(mode==="dificil"){state.hp=16;state.maxHp=16}
+  updateUI();
+
+  try{
+    setStatus("Guardando registro en Firebase...", "warn");
+    await createPlayDoc();
+    setStatus("Firebase conectado. Jugada guardada online.", "ok");
+  }catch(e){
+    console.error(e);
+    showError("No se pudo guardar en Firebase. Activa Anonymous Auth, Firestore y revisa las Rules.");
+    setStatus("Error Firebase: no se pudo guardar la jugada.", "bad");
+    return;
+  }
+
+  closeScreen("intro");
+  state.waitingAction=true;
+  log("Registro online completo. Inicia la prueba.");
+  setDialogue(name+" entra a La Barra Montemar.\\nRugmar golpea el mesón con su taza.\\n“Si quieres el Americano, tendrás que ganártelo.”");
+  sfx("start");
+}
+
+function updateUI(){
+  $("nameBox").textContent=state.name||"Sin registrar";
+  $("contactBox").textContent=state.contact||"Registro obligatorio";
+  $("hpTxt").textContent=(state.hp||0)+" / "+(state.maxHp||22);
+  $("hpBar").style.width=((state.hp||0)/(state.maxHp||22)*100)+"%";
+  $("focusTxt").textContent=Math.round(state.focus||0)+"%";
+  $("focusBar").style.width=Math.min(100,state.focus||0)+"%";
+  $("moodTxt").textContent=(state.mood||0)+" / "+(state.maxMood||14);
+  $("moodBar").style.width=((state.mood||0)/(state.maxMood||14)*100)+"%";
+  $("phaseTxt").textContent=(state.phase||0)+" / "+(state.maxPhase||8);
+  $("scoreTxt").textContent=state.score||0;
+  $("respectTxt").textContent=state.respect||0;
+  $("comboTxt").textContent="x"+(state.combo||1);
+}
+
+function chooseAction(a){
+  if(!currentDocRef){setDialogue("Primero debes registrarte para jugar.");openScreen("intro");return}
+  if(state.inBattle||state.finalReady||!state.waitingAction)return;
+  if(a==="hablar"){state.respect+=2;state.mood=Math.min(state.maxMood,state.mood+2);state.score+=8;setDialogue("Hablas con Rugmar sobre el café de grano.\\nEl goblin gruñe, pero escucha.\\nRespeto +2 · Ánimo +2.");log("Hablar: respeto y ánimo suben.")}
+  if(a==="preparar"){state.score+=18*state.combo;state.respect++;state.combo++;setDialogue("Ajustas la extracción del americano.\\nEl aroma sube y Rugmar observa con atención.\\nPuntaje alto · Combo sube.");log("Preparar: puntaje y combo suben.")}
+  if(a==="concentrar"){state.focus=Math.min(100,state.focus+35);state.score+=6;setDialogue("Respiras y sigues el vapor con la mirada.\\nTu movimiento será más preciso en la siguiente fase.");log("Concentrar: control mejorado.")}
+  if(a==="piedad"){state.mood=Math.min(state.maxMood,state.mood+3);state.respect+=3;setDialogue("Le recuerdas a Rugmar que el café también se comparte.\\nEl goblin baja un poco la guardia.\\nÁnimo +3 · Respeto +3.");log("Piedad: Rugmar se calma.")}
+  updateUI();
+  updatePlay({score:state.score, respect:state.respect, mood:state.mood, hp:state.hp, result:"En juego"});
+  state.waitingAction=false;
+  setTimeout(startPhase,900);
+}
+
+function startPhase(){
+  state.phase++;
+  if(state.phase>state.maxPhase)return endRun(true);
+  state.inBattle=true;
+  $("bossScene").style.display="none";
+  $("battleScene").style.display="grid";
+  $("attackTxt").textContent=attacks[(state.phase-1)%attacks.length];
+  bullets=[];particles=[];stars=[];player.x=canvas.width/2;player.y=canvas.height/2;elapsed=0;lastSpawn=0;lastTime=performance.now();
+  setDialogue("Fase "+state.phase+": "+attacks[(state.phase-1)%attacks.length]+".\\nEsquiva hasta que termine el patrón.");
+  log("Fase "+state.phase+" iniciada.");
+  updatePlay({phase:state.phase, score:state.score, hp:state.hp, respect:state.respect, mood:state.mood, result:"En juego"});
+  sfx("battle");
+  cancelAnimationFrame(anim);
+  anim=requestAnimationFrame(loop);
+  updateUI();
+}
+
+function finishPhase(){
+  state.inBattle=false;
+  $("battleScene").style.display="none";
+  $("bossScene").style.display="grid";
+  bullets=[];particles=[];stars=[];
+  state.score+=Math.max(10,Math.floor(state.hp*1.2))*state.combo;
+  state.focus=Math.max(0,state.focus-25);
+  updatePlay({phase:state.phase, score:state.score, hp:state.hp, respect:state.respect, mood:state.mood, result:"En juego"});
+  if(state.hp<=0)return endRun(false);
+  if(state.phase>=state.maxPhase)return endRun(true);
+  state.waitingAction=true;
+  setDialogue("Superaste la fase "+state.phase+".\\nRugmar sirve más café en la taza.\\nElige tu próxima acción.");
+  log("Fase "+state.phase+" superada.");
+  updateUI();
+  sfx("good");
+}
+
+function endRun(survived){
+  state.inBattle=false; state.finalReady=true;
+  cancelAnimationFrame(anim);
+  $("battleScene").style.display="none";
+  $("bossScene").style.display="grid";
+  $("final").classList.add("active");
+  $("coupon").style.display="none";
+  $("phraseBox").style.display=survived?"block":"none";
+  if(!survived){
+    state.lastResult="Derrota";
+    $("finalTitle").textContent="Rugmar ganó";
+    $("finalText").textContent="No lograste superar todas las fases. El americano seguirá bajo custodia de Rugmar.\\n\\nPuedes volver a intentarlo.";
+    updatePlay({result:"Derrota", score:state.score, hp:state.hp, respect:state.respect, mood:state.mood, phase:state.phase});
+    sfx("lose"); return;
+  }
+  state.lastResult="Sobrevivió";
+  $("finalTitle").textContent="Prueba final";
+  $("finalText").textContent="Sobreviviste a todas las fases.\\n\\nAhora escribe una frase final para convencer a Rugmar de entregarte el americano.";
+  updatePlay({result:"Sobrevivió", score:state.score, hp:state.hp, respect:state.respect, mood:state.mood, phase:state.phase});
+  sfx("good");
+}
+
+function judgePhrase(){
+  const phrase=$("finalPhrase").value.trim();
+  if(phrase.length<40){$("finalText").textContent="La frase es muy corta. Rugmar exige una frase más elaborada para entregar el premio.";sfx("lose");return}
+  const low=phrase.toLowerCase();
+  const words=["café","cafe","americano","barra","la barra","montemar","rugmar","aroma","energía","energia","grano","despertar"];
+  let power=0; words.forEach(w=>{if(low.includes(w))power+=3}); if(phrase.length>90)power+=10;
+  const total=state.score+state.hp*8+state.respect*15+state.mood*12+power;
+  const needTotal=state.mode==="dificil"?620:520, needHp=state.mode==="dificil"?7:8, needRespect=state.mode==="dificil"?10:8, needMood=state.mode==="dificil"?8:7;
+  if(total>=needTotal&&state.hp>=needHp&&state.respect>=needRespect&&state.mood>=needMood){
+    state.won=true; state.lastResult="Ganó premio";
+    $("finalTitle").textContent="Americano desbloqueado";
+    $("finalText").innerHTML="Rugmar te mira en silencio.<br><br><strong>“Bien. El americano es tuyo.”</strong><br><br>Puntaje final: <strong>"+total+"</strong>";
+    unlockCoupon(total, phrase); sfx("win");
+  }else{
+    state.lastResult="Casi ganó";
+    $("finalTitle").textContent="Casi lo logras";
+    $("finalText").innerHTML="Sobreviviste, pero no convenciste completamente a Rugmar.<br><br>Puntaje final: <strong>"+total+"</strong>.<br><br>Necesitas más respeto, ánimo, vida y una frase más potente.";
+    $("phraseBox").style.display="none";
+    updatePlay({result:"Casi ganó", finalScore:total, finalPhrase:phrase, score:state.score, hp:state.hp, respect:state.respect, mood:state.mood});
+    sfx("lose");
+  }
+}
+
+function unlockCoupon(total, phrase){
+  const code="AMERICANO-"+Math.floor(1000+Math.random()*9000);
+  state.coupon=code;
+  $("couponCode").textContent=code;
+  $("coupon").style.display="block";
+  $("phraseBox").style.display="none";
+  $("stamp").style.display="block";
+  updatePlay({
+    result:"Ganó premio",
+    finalScore:total,
+    finalPhrase:phrase,
+    couponCode:code,
+    couponStatus:"pendiente",
+    score:state.score,
+    hp:state.hp,
+    respect:state.respect,
+    mood:state.mood
+  });
+}
+
+function loop(t){
+  const dt=Math.min(33,t-lastTime); lastTime=t; elapsed+=dt;
+  updateBattle(); drawBattle();
+  const dur=state.mode==="dificil"?18000:16500;
+  $("timeTxt").textContent=Math.max(0,Math.ceil((dur-elapsed)/1000))+"s";
+  if(elapsed>=dur){finishPhase();return}
+  anim=requestAnimationFrame(loop);
+}
+
+function updateBattle(){
+  let speed=state.focus>0?4.2:3.5; if(keys.slow)speed*=.58;
+  if(keys.up)player.y-=speed; if(keys.down)player.y+=speed; if(keys.left)player.x-=speed; if(keys.right)player.x+=speed;
+  player.x=Math.max(28,Math.min(canvas.width-28,player.x)); player.y=Math.max(28,Math.min(canvas.height-28,player.y));
+  const diff=state.mode==="dificil"?1.35:1, interval=Math.max(115,330-state.phase*22)/diff;
+  if(elapsed-lastSpawn>interval){spawnPattern(); lastSpawn=elapsed}
+  bullets.forEach(b=>{b.x+=b.vx*diff;b.y+=b.vy*diff;b.life--;if(b.spin)b.a+=.12;if(b.wave)b.y+=Math.sin((elapsed+b.seed)/120)*b.wave});
+  bullets=bullets.filter(b=>b.life>0&&b.x>-80&&b.x<canvas.width+80&&b.y>-80&&b.y<canvas.height+80);
+  for(const b of bullets){const dx=b.x-player.x,dy=b.y-player.y;if(Math.sqrt(dx*dx+dy*dy)<b.r+player.r){b.life=0;damage(b.dmg||1);makeParticles(player.x,player.y,"#ff5a5f",12);break}}
+  particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--}); particles=particles.filter(p=>p.life>0);
+  stars.forEach(s=>{s.y+=s.vy;s.life--}); stars=stars.filter(s=>s.life>0);
+}
+
+function spawnPattern(){
+  const p=state.phase;
+  if(p===1)spawnRain(); else if(p===2)spawnSteam(); else if(p===3)spawnSugar(); else if(p===4)spawnBeans(); else if(p===5)spawnCross(); else if(p===6){spawnRain();spawnSteam()} else if(p===7){spawnSugar();spawnBeans()} else {spawnRain();spawnSteam();spawnCross()}
+  for(let i=0;i<2;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vy:.3+Math.random(),life:45,color:Math.random()<.5?"#ffd166":"#71f6ff"});
+}
 function spawnRain(){const c=state.mode==="dificil"?3:2;for(let i=0;i<c;i++)bullets.push({x:Math.random()*canvas.width,y:-20,vx:(Math.random()-.5)*1.2,vy:2.8+Math.random()*2,r:8,life:260,type:"drop",dmg:1})}
 function spawnSteam(){const side=Math.random()<.5?"l":"r";bullets.push({x:side==="l"?-20:canvas.width+20,y:40+Math.random()*(canvas.height-80),vx:side==="l"?3.2:-3.2,vy:0,r:13,life:230,type:"steam",wave:1.3,seed:Math.random()*1000,dmg:1})}
 function spawnSugar(){const c=state.mode==="dificil"?2:1;for(let i=0;i<c;i++)bullets.push({x:Math.random()*canvas.width,y:-25,vx:(Math.random()-.5)*2.5,vy:2.8+Math.random()*1.7,r:12,life:240,type:"sugar",spin:true,a:0,dmg:1})}
 function spawnBeans(){const a=Math.atan2(player.y-canvas.height/2,player.x-canvas.width/2)+(Math.random()-.5)*.9;bullets.push({x:canvas.width/2,y:canvas.height/2,vx:Math.cos(a)*3.6,vy:Math.sin(a)*3.6,r:7,life:220,type:"bean",dmg:1})}
 function spawnCross(){const cx=canvas.width/2,cy=canvas.height/2;bullets.push({x:cx,y:-20,vx:0,vy:3.5,r:10,life:220,type:"spark",dmg:1},{x:cx,y:canvas.height+20,vx:0,vy:-3.5,r:10,life:220,type:"spark",dmg:1},{x:-20,y:cy,vx:3.5,vy:0,r:10,life:220,type:"spark",dmg:1},{x:canvas.width+20,y:cy,vx:-3.5,vy:0,r:10,life:220,type:"spark",dmg:1})}
-function damage(n){state.hp-=n;state.combo=1;if(state.hp<0)state.hp=0;updateUI();shake();sfx("hit");if(state.hp<=0){state.inBattle=false;cancelAnimationFrame(anim);setTimeout(()=>endRun(false),250)}}
-function drawBattle(){ctx.clearRect(0,0,canvas.width,canvas.height);const bg=ctx.createLinearGradient(0,0,0,canvas.height);bg.addColorStop(0,"#050505");bg.addColorStop(1,"#120b07");ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height);ctx.strokeStyle="#242424";ctx.lineWidth=1;for(let x=0;x<canvas.width;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke()}for(let y=0;y<canvas.height;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke()}stars.forEach(s=>{ctx.fillStyle=s.color;ctx.fillRect(s.x,s.y,2,2)});ctx.strokeStyle="#fff";ctx.lineWidth=4;ctx.strokeRect(12,12,canvas.width-24,canvas.height-24);bullets.forEach(drawBullet);particles.forEach(p=>{ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,3,3)});drawHeart(player.x,player.y);ctx.fillStyle="#fff";ctx.font="bold 16px Courier New";ctx.fillText("VIDA "+state.hp+"/"+state.maxHp,22,canvas.height-18);if(state.focus>0){ctx.fillStyle="#71f6ff";ctx.fillText("CONCENTRADO",canvas.width-160,canvas.height-18)}}
+
+function damage(n){
+  state.hp-=n; state.combo=1; if(state.hp<0)state.hp=0; updateUI(); shake(); sfx("hit");
+  updatePlay({hp:state.hp, score:state.score, respect:state.respect, mood:state.mood, phase:state.phase});
+  if(state.hp<=0){state.inBattle=false;cancelAnimationFrame(anim);setTimeout(()=>endRun(false),250)}
+}
+
+function drawBattle(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const bg=ctx.createLinearGradient(0,0,0,canvas.height); bg.addColorStop(0,"#050505"); bg.addColorStop(1,"#120b07"); ctx.fillStyle=bg; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle="#242424"; ctx.lineWidth=1; for(let x=0;x<canvas.width;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke()} for(let y=0;y<canvas.height;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke()}
+  stars.forEach(s=>{ctx.fillStyle=s.color;ctx.fillRect(s.x,s.y,2,2)}); ctx.strokeStyle="#fff"; ctx.lineWidth=4; ctx.strokeRect(12,12,canvas.width-24,canvas.height-24);
+  bullets.forEach(drawBullet); particles.forEach(p=>{ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,3,3)}); drawHeart(player.x,player.y);
+  ctx.fillStyle="#fff"; ctx.font="bold 16px Courier New"; ctx.fillText("VIDA "+state.hp+"/"+state.maxHp,22,canvas.height-18);
+  if(state.focus>0){ctx.fillStyle="#71f6ff";ctx.fillText("CONCENTRADO",canvas.width-160,canvas.height-18)}
+}
 function drawBullet(b){ctx.save();ctx.translate(b.x,b.y);if(b.spin)ctx.rotate(b.a||0);if(b.type==="drop"){ctx.fillStyle="#9c5a2b";ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();ctx.fillStyle="#ffd166";ctx.fillRect(-3,-b.r,6,b.r)}else if(b.type==="steam"){ctx.strokeStyle="#f4f4f4";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-b.r,0);ctx.quadraticCurveTo(0,-b.r,b.r,0);ctx.quadraticCurveTo(0,b.r,-b.r,0);ctx.stroke()}else if(b.type==="sugar"){ctx.fillStyle="#fff";ctx.fillRect(-b.r,-b.r,b.r*2,b.r*2);ctx.strokeStyle="#ffd166";ctx.lineWidth=2;ctx.strokeRect(-b.r,-b.r,b.r*2,b.r*2)}else if(b.type==="bean"){ctx.fillStyle="#5c2e13";ctx.beginPath();ctx.ellipse(0,0,b.r,b.r*1.45,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#d28a45";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-b.r);ctx.quadraticCurveTo(4,0,0,b.r);ctx.stroke()}else if(b.type==="spark"){ctx.strokeStyle="#c79bff";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-b.r,0);ctx.lineTo(b.r,0);ctx.moveTo(0,-b.r);ctx.lineTo(0,b.r);ctx.stroke()}ctx.restore()}
 function drawHeart(x,y){ctx.save();ctx.translate(x,y);ctx.fillStyle="#ff3333";ctx.beginPath();ctx.moveTo(0,9);ctx.bezierCurveTo(-18,-5,-10,-18,0,-8);ctx.bezierCurveTo(10,-18,18,-5,0,9);ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();ctx.restore()}
 function makeParticles(x,y,color,count){for(let i=0;i<count;i++)particles.push({x,y,vx:(Math.random()-.5)*5,vy:(Math.random()-.5)*5,life:20,color})}
-function openAdmin(){$("admin").classList.add("active");lockAdmin()}function closeAdmin(){$("admin").classList.remove("active")}function unlockAdmin(){if($("adminPin").value.trim()!==PIN){$("adminMsg").textContent="PIN incorrecto.";return}adminUnlocked=true;$("adminLogin").style.display="none";$("adminPanel").style.display="block";$("adminMsg").textContent="Panel desbloqueado.";renderAdmin()}function lockAdmin(){adminUnlocked=false;$("adminLogin").style.display="block";$("adminPanel").style.display="none";$("adminPin").value="";$("adminMsg").textContent=""}
-function renderAdmin(){if(!adminUnlocked)return;const body=$("adminTable");if(db.length===0){body.innerHTML='<tr><td colspan="8">Sin registros.</td></tr>';return}body.innerHTML=db.map(c=>{const pending=(c.coupons||[]).filter(x=>x.status==="pendiente").length,used=(c.coupons||[]).filter(x=>x.status==="canjeado").length,last=(c.results&&c.results.length)?c.results[c.results.length-1].result:"-";return `<tr><td>${esc(c.name)}</td><td>${esc(c.contact)}</td><td>${c.visits}</td><td>${c.plays}</td><td>${c.wins}</td><td>${pending} pendientes / ${used} usados</td><td>${esc(last)}</td><td>${esc(c.lastVisit||"-")}</td></tr>`}).join("")}
-function exportCSV(){if(!adminUnlocked)return;const rows=[["Nombre","Contacto","Visitas","Jugadas","Ganadas","Cupones pendientes","Cupones canjeados","Ultimo resultado","Ultima visita"]];db.forEach(c=>rows.push([c.name,c.contact,c.visits,c.plays,c.wins,(c.coupons||[]).filter(x=>x.status==="pendiente").length,(c.coupons||[]).filter(x=>x.status==="canjeado").length,(c.results&&c.results.length)?c.results[c.results.length-1].result:"",c.lastVisit||""]));const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="base-americano-la-barra.csv";a.click();URL.revokeObjectURL(url)}
-function clearDB(){if(!adminUnlocked)return;const p=prompt("Confirma PIN para borrar la base local:");if(p!==PIN)return alert("PIN incorrecto");if(confirm("¿Borrar toda la base local?")){db=[];saveDB();renderAdmin()}}
-function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
-window.addEventListener("keydown",e=>{if(["ArrowUp","w","W"].includes(e.key))keys.up=true;if(["ArrowDown","s","S"].includes(e.key))keys.down=true;if(["ArrowLeft","a","A"].includes(e.key))keys.left=true;if(["ArrowRight","d","D"].includes(e.key))keys.right=true;if(["Shift"," "].includes(e.key))keys.slow=true});window.addEventListener("keyup",e=>{if(["ArrowUp","w","W"].includes(e.key))keys.up=false;if(["ArrowDown","s","S"].includes(e.key))keys.down=false;if(["ArrowLeft","a","A"].includes(e.key))keys.left=false;if(["ArrowRight","d","D"].includes(e.key))keys.right=false;if(["Shift"," "].includes(e.key))keys.slow=false});document.querySelectorAll("[data-key]").forEach(btn=>{const k=btn.dataset.key;["touchstart","mousedown"].forEach(ev=>btn.addEventListener(ev,e=>{e.preventDefault();keys[k]=true}));["touchend","touchcancel","mouseup","mouseleave"].forEach(ev=>btn.addEventListener(ev,e=>{e.preventDefault();keys[k]=false}))});
-let audioCtx=null,gain=null,music=false,musicTimer=null;const tune=[196,262,294,330,392,330,294,262,196,262,330,392,523,392,330,262];function setupAudio(){if(audioCtx)return;audioCtx=new (window.AudioContext||window.webkitAudioContext)();gain=audioCtx.createGain();gain.gain.value=.055;gain.connect(audioCtx.destination)}function tone(f,d=.12,type="square",v=.05){if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=f;g.gain.value=0;o.connect(g);g.connect(gain);const n=audioCtx.currentTime;g.gain.linearRampToValueAtTime(v,n+.01);g.gain.exponentialRampToValueAtTime(.001,n+d);o.start(n);o.stop(n+d+.04)}function toggleMusic(){setupAudio();if(audioCtx.state==="suspended")audioCtx.resume();music=!music;$("musicBtn").textContent=music?"Apagar música":"Música";if(music)musicLoop();else clearTimeout(musicTimer)}function musicLoop(){if(!music)return;let t=0;tune.forEach((n,i)=>{setTimeout(()=>{if(music){tone(n,.11,i%3===0?"triangle":"square",.032);if(i%4===0)tone(n/2,.18,"sine",.018)}},t);t+=145});musicTimer=setTimeout(musicLoop,t+180)}function sfx(type){if(!audioCtx)return;if(type==="start"){tone(262,.1);setTimeout(()=>tone(330,.1),100);setTimeout(()=>tone(392,.16),200)}if(type==="battle"){tone(147,.08,"sawtooth");setTimeout(()=>tone(196,.08,"sawtooth"),80)}if(type==="hit"){tone(110,.16,"sawtooth",.07)}if(type==="good"){tone(523,.1,"triangle");setTimeout(()=>tone(659,.12,"triangle"),100)}if(type==="win"){tone(523,.12,"triangle");setTimeout(()=>tone(659,.12,"triangle"),100);setTimeout(()=>tone(784,.2,"triangle"),220)}if(type==="lose"){tone(220,.16,"sawtooth");setTimeout(()=>tone(160,.18,"sawtooth"),150)}}
-restart();
+
+async function openAdmin(){
+  $("admin").classList.add("active");
+  $("adminMsg").textContent="";
+  if(auth.currentUser && !auth.currentUser.isAnonymous){showAdminPanel(auth.currentUser); await renderAdmin();}
+  else {showAdminLogin();}
+}
+function closeAdmin(){$("admin").classList.remove("active")}
+function showAdminLogin(){$("adminLogin").style.display="block";$("adminPanel").style.display="none"}
+function showAdminPanel(user){$("adminLogin").style.display="none";$("adminPanel").style.display="block";$("adminUser").textContent="Sesión admin: "+user.email}
+
+async function adminLogin(){
+  const email=$("adminEmail").value.trim(), pass=$("adminPass").value;
+  if(!email || !pass){$("adminMsg").textContent="Ingresa email y contraseña.";return}
+  try{
+    const cred = await signInWithEmailAndPassword(auth, email, pass);
+    showAdminPanel(cred.user);
+    $("adminMsg").textContent="Admin conectado.";
+    await renderAdmin();
+  }catch(e){
+    console.error(e);
+    $("adminMsg").textContent="No se pudo iniciar sesión. Revisa usuario, contraseña, Auth y Authorized domains.";
+  }
+}
+async function adminLogout(){
+  await signOut(auth);
+  await ensureAuth();
+  showAdminLogin();
+  $("adminMsg").textContent="Sesión admin cerrada.";
+}
+async function renderAdmin(){
+  if(!auth.currentUser || auth.currentUser.isAnonymous){$("adminMsg").textContent="Debes iniciar sesión como admin.";return}
+  const body=$("adminTable");
+  body.innerHTML='<tr><td colspan="12">Cargando...</td></tr>';
+  try{
+    const q=query(collection(db,"jugadas"), orderBy("createdAt","desc"));
+    const snap=await getDocs(q);
+    adminRows=[];
+    body.innerHTML="";
+    if(snap.empty){body.innerHTML='<tr><td colspan="12">Sin registros todavía.</td></tr>';return}
+    snap.forEach(d=>{
+      const data=d.data(); adminRows.push({id:d.id,...data});
+      const coupon=data.couponCode||"";
+      const status=data.couponStatus||"";
+      const canRedeem=coupon && status==="pendiente";
+      const row=document.createElement("tr");
+      row.innerHTML=`<td>${esc(data.createdAtText||"-")}</td><td>${esc(data.name)}</td><td>${esc(data.contact)}</td><td>${esc(data.mode)}</td><td>${esc(data.result)}</td><td>${esc(data.finalScore ?? data.score ?? 0)}</td><td>${esc(data.hp ?? "")}</td><td>${esc(data.respect ?? "")}</td><td>${esc(data.mood ?? "")}</td><td>${esc(coupon||"-")}</td><td>${esc(status||"-")}</td><td>${canRedeem?`<button class="smallbtn" data-id="${d.id}">Canjear</button>`:"-"}</td>`;
+      body.appendChild(row);
+    });
+    body.querySelectorAll("button[data-id]").forEach(btn=>{
+      btn.addEventListener("click",()=>redeemAdmin(btn.dataset.id));
+    });
+  }catch(e){
+    console.error(e);
+    body.innerHTML='<tr><td colspan="12">Error al leer Firestore. Revisa Rules y login admin.</td></tr>';
+  }
+}
+async function redeemAdmin(id){
+  try{
+    await updateDoc(doc(db,"jugadas",id), {couponStatus:"canjeado", redeemedAt: serverTimestamp(), redeemedAtText: nowText()});
+    await renderAdmin();
+  }catch(e){
+    console.error(e); alert("No se pudo canjear. Revisa permisos.");
+  }
+}
+function exportCSV(){
+  if(!adminRows.length){alert("No hay datos cargados.");return}
+  const rows=[["Fecha","Nombre","Contacto","Modo","Resultado","Puntaje","HP","Respeto","Animo","Cupon","Estado Cupon"]];
+  adminRows.forEach(r=>rows.push([r.createdAtText||"",r.name||"",r.contact||"",r.mode||"",r.result||"",r.finalScore ?? r.score ?? "",r.hp ?? "",r.respect ?? "",r.mood ?? "",r.couponCode||"",r.couponStatus||""]));
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\\n");
+  const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download="base-firebase-americano-la-barra.csv"; a.click(); URL.revokeObjectURL(url);
+}
+
+window.addEventListener("keydown",e=>{if(["ArrowUp","w","W"].includes(e.key))keys.up=true;if(["ArrowDown","s","S"].includes(e.key))keys.down=true;if(["ArrowLeft","a","A"].includes(e.key))keys.left=true;if(["ArrowRight","d","D"].includes(e.key))keys.right=true;if(["Shift"," "].includes(e.key))keys.slow=true});
+window.addEventListener("keyup",e=>{if(["ArrowUp","w","W"].includes(e.key))keys.up=false;if(["ArrowDown","s","S"].includes(e.key))keys.down=false;if(["ArrowLeft","a","A"].includes(e.key))keys.left=false;if(["ArrowRight","d","D"].includes(e.key))keys.right=false;if(["Shift"," "].includes(e.key))keys.slow=false});
+document.querySelectorAll("[data-key]").forEach(btn=>{const k=btn.dataset.key;["touchstart","mousedown"].forEach(ev=>btn.addEventListener(ev,e=>{e.preventDefault();keys[k]=true}));["touchend","touchcancel","mouseup","mouseleave"].forEach(ev=>btn.addEventListener(ev,e=>{e.preventDefault();keys[k]=false}))});
+
+let audioCtx=null,gain=null,music=false,musicTimer=null;
+const tune=[196,262,294,330,392,330,294,262,196,262,330,392,523,392,330,262];
+function setupAudio(){if(audioCtx)return;audioCtx=new (window.AudioContext||window.webkitAudioContext)();gain=audioCtx.createGain();gain.gain.value=.055;gain.connect(audioCtx.destination)}
+function tone(f,d=.12,type="square",v=.05){if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=f;g.gain.value=0;o.connect(g);g.connect(gain);const n=audioCtx.currentTime;g.gain.linearRampToValueAtTime(v,n+.01);g.gain.exponentialRampToValueAtTime(.001,n+d);o.start(n);o.stop(n+d+.04)}
+function toggleMusic(){setupAudio();if(audioCtx.state==="suspended")audioCtx.resume();music=!music;$("musicBtn").textContent=music?"Apagar música":"Música";if(music)musicLoop();else clearTimeout(musicTimer)}
+function musicLoop(){if(!music)return;let t=0;tune.forEach((n,i)=>{setTimeout(()=>{if(music){tone(n,.11,i%3===0?"triangle":"square",.032);if(i%4===0)tone(n/2,.18,"sine",.018)}},t);t+=145});musicTimer=setTimeout(musicLoop,t+180)}
+function sfx(type){if(!audioCtx)return;if(type==="start"){tone(262,.1);setTimeout(()=>tone(330,.1),100);setTimeout(()=>tone(392,.16),200)}if(type==="battle"){tone(147,.08,"sawtooth");setTimeout(()=>tone(196,.08,"sawtooth"),80)}if(type==="hit"){tone(110,.16,"sawtooth",.07)}if(type==="good"){tone(523,.1,"triangle");setTimeout(()=>tone(659,.12,"triangle"),100)}if(type==="win"){tone(523,.12,"triangle");setTimeout(()=>tone(659,.12,"triangle"),100);setTimeout(()=>tone(784,.2,"triangle"),220)}if(type==="lose"){tone(220,.16,"sawtooth");setTimeout(()=>tone(160,.18,"sawtooth"),150)}}
+
+$("musicBtn").addEventListener("click",toggleMusic);
+$("instructionsBtn").addEventListener("click",()=>openScreen("intro"));
+$("adminBtn").addEventListener("click",openAdmin);
+$("restartBtn").addEventListener("click",restart);
+$("startNormal").addEventListener("click",()=>startGame("normal"));
+$("startDificil").addEventListener("click",()=>startGame("dificil"));
+$("actHablar").addEventListener("click",()=>chooseAction("hablar"));
+$("actPreparar").addEventListener("click",()=>chooseAction("preparar"));
+$("actConcentrar").addEventListener("click",()=>chooseAction("concentrar"));
+$("actPiedad").addEventListener("click",()=>chooseAction("piedad"));
+$("sendPhrase").addEventListener("click",judgePhrase);
+$("playAgain").addEventListener("click",restart);
+$("adminLoginBtn").addEventListener("click",adminLogin);
+$("closeAdminBtn").addEventListener("click",closeAdmin);
+$("refreshAdmin").addEventListener("click",renderAdmin);
+$("exportCsv").addEventListener("click",exportCSV);
+$("adminLogout").addEventListener("click",adminLogout);
+
+onAuthStateChanged(auth, user=>{
+  if(user){
+    firebaseReady=true;
+    setStatus(user.isAnonymous ? "Firebase listo. Usuario invitado conectado." : "Firebase listo. Admin conectado: "+user.email, "ok");
+  }
+});
+
+async function init(){
+  resetGame(); updateUI(); setStatus("Conectando a Firebase...", "warn");
+  try{await ensureAuth(); firebaseReady=true; setStatus("Firebase listo. Registro online disponible.", "ok");}
+  catch(e){console.error(e); setStatus("Error: activa Authentication Anonymous y revisa dominios autorizados.", "bad");}
+}
+init();
 </script>
 </body>
 </html>
