@@ -32,6 +32,104 @@ canvas{width:min(100%,690px);height:min(58vh,430px);max-height:430px;border:4px 
 .smallbtn{border:2px solid #fff;background:#000;color:#fff;padding:7px 9px;font-weight:900;cursor:pointer}.smallbtn:hover{background:#fff;color:#000}
 .flash{animation:flash .22s linear 1}@keyframes flash{0%{filter:brightness(1)}40%{filter:brightness(2)}100%{filter:brightness(1)}}.shake{animation:shake .22s linear 1}@keyframes shake{0%{transform:translate(0,0)}25%{transform:translate(-6px,1px)}50%{transform:translate(5px,-1px)}75%{transform:translate(-4px,2px)}100%{transform:translate(0,0)}}
 @media(max-width:960px){body{padding:0}.app{height:100vh;width:100%;border:0;box-shadow:none}.layout{grid-template-columns:1fr}.side{display:none}.bw{grid-template-columns:1fr}.gobcard{height:235px}.info{max-height:210px;overflow:auto}.phases{grid-template-columns:1fr}.actions{grid-template-columns:repeat(2,1fr)}.mc{display:flex}canvas{height:54vh}.choices,.infogrid{grid-template-columns:1fr}.top{padding:9px 10px}.brand p{display:none}.btn{padding:8px 10px}.dialog{min-height:96px;font-size:14px}.main{gap:8px;padding:8px}.act{padding:12px 8px;font-size:15px}}
+
+/* MODO CELULAR CLARO: durante la batalla se oculta todo lo que distrae */
+@media(max-width:960px){
+  .app.battleMode{
+    display:block;
+    width:100vw;
+    height:100vh;
+    border:0;
+    box-shadow:none;
+    background:#000;
+  }
+  .app.battleMode .top,
+  .app.battleMode .dialog,
+  .app.battleMode .actions,
+  .app.battleMode .side{
+    display:none!important;
+  }
+  .app.battleMode .layout,
+  .app.battleMode .main{
+    display:block;
+    width:100vw;
+    height:100vh;
+    padding:0;
+    margin:0;
+  }
+  .app.battleMode .stage{
+    position:fixed;
+    inset:0;
+    border:0;
+    z-index:50;
+    background:#000;
+  }
+  .app.battleMode .battle{
+    display:grid!important;
+    padding:0;
+    place-items:center;
+    background:radial-gradient(circle at 50% 35%,#241207,#050505 62%,#000);
+  }
+  .app.battleMode .battleWrap{
+    width:100vw;
+    height:100vh;
+    padding:8px;
+    justify-content:space-between;
+  }
+  .app.battleMode .bh{
+    position:absolute;
+    top:8px;
+    left:6px;
+    right:6px;
+    z-index:3;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+  }
+  .app.battleMode .hud{
+    font-size:11px;
+    padding:6px 7px;
+    border:2px solid #fff;
+    background:#000d;
+    box-shadow:0 0 12px #000;
+  }
+  .app.battleMode canvas{
+    width:100vw;
+    height:calc(100vh - 112px);
+    max-height:none;
+    margin-top:38px;
+    border:3px solid #fff;
+    box-shadow:none;
+  }
+  .app.battleMode .mc{
+    display:flex!important;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:4;
+    padding:28px 8px 10px;
+    background:linear-gradient(transparent,#000 42%);
+  }
+  .app.battleMode .dpad{
+    display:none;
+  }
+  .app.battleMode .tips{
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    gap:8px;
+  }
+  .app.battleMode .tip{
+    padding:10px 12px;
+    font-size:12px;
+    background:#000d;
+    color:#fff;
+    border:2px solid #fff;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -175,8 +273,8 @@ async function updatePlay(fields){
 }
 
 function resetGame(){
-  const baseHp = IS_MOBILE ? 28 : 22;
-  const basePhases = IS_MOBILE ? 6 : 8;
+  const baseHp = IS_MOBILE ? 30 : 22;
+  const basePhases = IS_MOBILE ? 5 : 8;
   state = {
     name:"",contact:"",mode:"normal",
     hp:baseHp,maxHp:baseHp,focus:0,mood:0,maxMood:14,respect:0,score:0,combo:1,
@@ -189,6 +287,7 @@ function resetGame(){
 }
 
 function restart(){
+  $("game").classList.remove("battleMode");
   resetGame();
   updateUI();
   $("log").innerHTML="";
@@ -196,6 +295,7 @@ function restart(){
   $("stamp").style.display="none";
   $("phraseBox").style.display="block";
   $("final").classList.remove("active");
+  $("game").classList.remove("battleMode");
   $("battleScene").style.display="none";
   $("bossScene").style.display="grid";
   setDialogue("Completa el registro para iniciar la prueba.\\nNo se puede jugar sin entregar datos para validación del premio.");
@@ -212,9 +312,9 @@ async function startGame(mode){
   resetGame();
   state.mode=mode; state.name=name; state.contact=contact;
   if(mode==="dificil"){
-    state.hp = IS_MOBILE ? 22 : 16;
-    state.maxHp = IS_MOBILE ? 22 : 16;
-    state.maxPhase = IS_MOBILE ? 7 : 8;
+    state.hp = IS_MOBILE ? 24 : 16;
+    state.maxHp = IS_MOBILE ? 24 : 16;
+    state.maxPhase = IS_MOBILE ? 6 : 8;
   }
   updateUI();
 
@@ -268,6 +368,7 @@ function startPhase(){
   state.phase++;
   if(state.phase>state.maxPhase)return endRun(true);
   state.inBattle=true;
+  $("game").classList.add("battleMode");
   $("bossScene").style.display="none";
   $("battleScene").style.display="grid";
   $("attackTxt").textContent=attacks[(state.phase-1)%attacks.length];
@@ -283,6 +384,7 @@ function startPhase(){
 
 function finishPhase(){
   state.inBattle=false;
+  $("game").classList.remove("battleMode");
   $("battleScene").style.display="none";
   $("bossScene").style.display="grid";
   bullets=[];particles=[];stars=[];
@@ -301,6 +403,7 @@ function finishPhase(){
 function endRun(survived){
   state.inBattle=false; state.finalReady=true;
   cancelAnimationFrame(anim);
+  $("game").classList.remove("battleMode");
   $("battleScene").style.display="none";
   $("bossScene").style.display="grid";
   $("final").classList.add("active");
@@ -327,10 +430,10 @@ function judgePhrase(){
   const words=["café","cafe","americano","barra","la barra","montemar","rugmar","aroma","energía","energia","grano","despertar"];
   let power=0; words.forEach(w=>{if(low.includes(w))power+=3}); if(phrase.length>90)power+=10;
   const total=state.score+state.hp*8+state.respect*15+state.mood*12+power;
-  const needTotal = IS_MOBILE ? (state.mode==="dificil" ? 540 : 450) : (state.mode==="dificil" ? 620 : 520);
-  const needHp = IS_MOBILE ? (state.mode==="dificil" ? 6 : 7) : (state.mode==="dificil" ? 7 : 8);
-  const needRespect = IS_MOBILE ? (state.mode==="dificil" ? 8 : 6) : (state.mode==="dificil" ? 10 : 8);
-  const needMood = IS_MOBILE ? (state.mode==="dificil" ? 7 : 6) : (state.mode==="dificil" ? 8 : 7);
+  const needTotal = IS_MOBILE ? (state.mode==="dificil" ? 420 : 340) : (state.mode==="dificil" ? 620 : 520);
+  const needHp = IS_MOBILE ? (state.mode==="dificil" ? 5 : 6) : (state.mode==="dificil" ? 7 : 8);
+  const needRespect = IS_MOBILE ? (state.mode==="dificil" ? 6 : 5) : (state.mode==="dificil" ? 10 : 8);
+  const needMood = IS_MOBILE ? (state.mode==="dificil" ? 5 : 4) : (state.mode==="dificil" ? 8 : 7);
   if(total>=needTotal&&state.hp>=needHp&&state.respect>=needRespect&&state.mood>=needMood){
     state.won=true; state.lastResult="Ganó premio";
     $("finalTitle").textContent="Americano desbloqueado";
@@ -369,7 +472,7 @@ function unlockCoupon(total, phrase){
 function loop(t){
   const dt=Math.min(33,t-lastTime); lastTime=t; elapsed+=dt;
   updateBattle(); drawBattle();
-  const dur = IS_MOBILE ? (state.mode==="dificil" ? 14000 : 12500) : (state.mode==="dificil" ? 18000 : 16500);
+  const dur = IS_MOBILE ? (state.mode==="dificil" ? 11500 : 10000) : (state.mode==="dificil" ? 18000 : 16500);
   $("timeTxt").textContent=Math.max(0,Math.ceil((dur-elapsed)/1000))+"s";
   if(elapsed>=dur){finishPhase();return}
   anim=requestAnimationFrame(loop);
@@ -394,8 +497,8 @@ function updateBattle(){
   if(keys.up)player.y-=speed; if(keys.down)player.y+=speed; if(keys.left)player.x-=speed; if(keys.right)player.x+=speed;
   player.x=Math.max(28,Math.min(canvas.width-28,player.x)); player.y=Math.max(28,Math.min(canvas.height-28,player.y));
 
-  const diff = (state.mode==="dificil"?1.35:1) * (IS_MOBILE ? 0.78 : 1);
-  const mobileBreath = IS_MOBILE ? 1.65 : 1;
+  const diff = (state.mode==="dificil"?1.35:1) * (IS_MOBILE ? 0.62 : 1);
+  const mobileBreath = IS_MOBILE ? 2.25 : 1;
   const interval=Math.max(115,330-state.phase*22) * mobileBreath / Math.max(diff, .1);
 
   if(elapsed-lastSpawn>interval){spawnPattern(); lastSpawn=elapsed}
@@ -416,12 +519,24 @@ function updateBattle(){
 
 function spawnPattern(){
   const p=state.phase;
-  if(p===1)spawnRain(); else if(p===2)spawnSteam(); else if(p===3)spawnSugar(); else if(p===4)spawnBeans(); else if(p===5)spawnCross(); else if(p===6){spawnRain();spawnSteam()} else if(p===7){spawnSugar();spawnBeans()} else {spawnRain();spawnSteam();spawnCross()}
+
+  if(IS_MOBILE){
+    // En celular los patrones son más legibles y espaciados.
+    if(p===1) spawnRain();
+    else if(p===2) spawnSteam();
+    else if(p===3) spawnBeans();
+    else if(p===4) spawnSugar();
+    else if(p===5){ spawnRain(); if(Math.random()<0.45) spawnSteam(); }
+    else { spawnBeans(); if(Math.random()<0.35) spawnSugar(); }
+  }else{
+    if(p===1)spawnRain(); else if(p===2)spawnSteam(); else if(p===3)spawnSugar(); else if(p===4)spawnBeans(); else if(p===5)spawnCross(); else if(p===6){spawnRain();spawnSteam()} else if(p===7){spawnSugar();spawnBeans()} else {spawnRain();spawnSteam();spawnCross()}
+  }
+
   for(let i=0;i<2;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vy:.3+Math.random(),life:45,color:Math.random()<.5?"#ffd166":"#71f6ff"});
 }
-function spawnRain(){const c=state.mode==="dificil"?3:2;for(let i=0;i<c;i++)bullets.push({x:Math.random()*canvas.width,y:-20,vx:(Math.random()-.5)*1.2,vy:2.8+Math.random()*2,r:8,life:260,type:"drop",dmg:1})}
+function spawnRain(){const c=IS_MOBILE ? (state.mode==="dificil"?2:1) : (state.mode==="dificil"?3:2);for(let i=0;i<c;i++)bullets.push({x:Math.random()*canvas.width,y:-20,vx:(Math.random()-.5)*1.2,vy:2.8+Math.random()*2,r:8,life:260,type:"drop",dmg:1})}
 function spawnSteam(){const side=Math.random()<.5?"l":"r";bullets.push({x:side==="l"?-20:canvas.width+20,y:40+Math.random()*(canvas.height-80),vx:side==="l"?3.2:-3.2,vy:0,r:13,life:230,type:"steam",wave:1.3,seed:Math.random()*1000,dmg:1})}
-function spawnSugar(){const c=state.mode==="dificil"?2:1;for(let i=0;i<c;i++)bullets.push({x:Math.random()*canvas.width,y:-25,vx:(Math.random()-.5)*2.5,vy:2.8+Math.random()*1.7,r:12,life:240,type:"sugar",spin:true,a:0,dmg:1})}
+function spawnSugar(){const c=IS_MOBILE ? 1 : (state.mode==="dificil"?2:1);for(let i=0;i<c;i++)bullets.push({x:Math.random()*canvas.width,y:-25,vx:(Math.random()-.5)*2.5,vy:2.8+Math.random()*1.7,r:12,life:240,type:"sugar",spin:true,a:0,dmg:1})}
 function spawnBeans(){const a=Math.atan2(player.y-canvas.height/2,player.x-canvas.width/2)+(Math.random()-.5)*.9;bullets.push({x:canvas.width/2,y:canvas.height/2,vx:Math.cos(a)*3.6,vy:Math.sin(a)*3.6,r:7,life:220,type:"bean",dmg:1})}
 function spawnCross(){const cx=canvas.width/2,cy=canvas.height/2;bullets.push({x:cx,y:-20,vx:0,vy:3.5,r:10,life:220,type:"spark",dmg:1},{x:cx,y:canvas.height+20,vx:0,vy:-3.5,r:10,life:220,type:"spark",dmg:1},{x:-20,y:cy,vx:3.5,vy:0,r:10,life:220,type:"spark",dmg:1},{x:canvas.width+20,y:cy,vx:-3.5,vy:0,r:10,life:220,type:"spark",dmg:1})}
 
@@ -436,12 +551,19 @@ function drawBattle(){
   const bg=ctx.createLinearGradient(0,0,0,canvas.height); bg.addColorStop(0,"#050505"); bg.addColorStop(1,"#120b07"); ctx.fillStyle=bg; ctx.fillRect(0,0,canvas.width,canvas.height);
   ctx.strokeStyle="#242424"; ctx.lineWidth=1; for(let x=0;x<canvas.width;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke()} for(let y=0;y<canvas.height;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke()}
   stars.forEach(s=>{ctx.fillStyle=s.color;ctx.fillRect(s.x,s.y,2,2)}); ctx.strokeStyle="#fff"; ctx.lineWidth=4; ctx.strokeRect(12,12,canvas.width-24,canvas.height-24);
+  if(IS_MOBILE){
+    ctx.fillStyle="#ffd166";
+    ctx.font="bold 18px Courier New";
+    ctx.textAlign="center";
+    ctx.fillText("ARRASTRA EL CORAZÓN", canvas.width/2, 42);
+    ctx.textAlign="left";
+  }
   bullets.forEach(drawBullet); particles.forEach(p=>{ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,3,3)}); drawHeart(player.x,player.y);
   ctx.fillStyle="#fff"; ctx.font="bold 16px Courier New"; ctx.fillText("VIDA "+state.hp+"/"+state.maxHp,22,canvas.height-18);
   if(state.focus>0){ctx.fillStyle="#71f6ff";ctx.fillText("CONCENTRADO",canvas.width-160,canvas.height-18)}
 }
-function drawBullet(b){ctx.save();ctx.translate(b.x,b.y);if(b.spin)ctx.rotate(b.a||0);if(b.type==="drop"){ctx.fillStyle="#9c5a2b";ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();ctx.fillStyle="#ffd166";ctx.fillRect(-3,-b.r,6,b.r)}else if(b.type==="steam"){ctx.strokeStyle="#f4f4f4";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-b.r,0);ctx.quadraticCurveTo(0,-b.r,b.r,0);ctx.quadraticCurveTo(0,b.r,-b.r,0);ctx.stroke()}else if(b.type==="sugar"){ctx.fillStyle="#fff";ctx.fillRect(-b.r,-b.r,b.r*2,b.r*2);ctx.strokeStyle="#ffd166";ctx.lineWidth=2;ctx.strokeRect(-b.r,-b.r,b.r*2,b.r*2)}else if(b.type==="bean"){ctx.fillStyle="#5c2e13";ctx.beginPath();ctx.ellipse(0,0,b.r,b.r*1.45,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#d28a45";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-b.r);ctx.quadraticCurveTo(4,0,0,b.r);ctx.stroke()}else if(b.type==="spark"){ctx.strokeStyle="#c79bff";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-b.r,0);ctx.lineTo(b.r,0);ctx.moveTo(0,-b.r);ctx.lineTo(0,b.r);ctx.stroke()}ctx.restore()}
-function drawHeart(x,y){ctx.save();ctx.translate(x,y);ctx.fillStyle="#ff3333";ctx.beginPath();ctx.moveTo(0,9);ctx.bezierCurveTo(-18,-5,-10,-18,0,-8);ctx.bezierCurveTo(10,-18,18,-5,0,9);ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();ctx.restore()}
+function drawBullet(b){ctx.save();ctx.translate(b.x,b.y);const vr=IS_MOBILE?b.r*1.28:b.r;if(b.spin)ctx.rotate(b.a||0);if(b.type==="drop"){ctx.fillStyle="#9c5a2b";ctx.beginPath();ctx.arc(0,0,vr,0,Math.PI*2);ctx.fill();ctx.fillStyle="#ffd166";ctx.fillRect(-3,-vr,6,vr)}else if(b.type==="steam"){ctx.strokeStyle="#f4f4f4";ctx.lineWidth=IS_MOBILE?7:5;ctx.beginPath();ctx.moveTo(-vr,0);ctx.quadraticCurveTo(0,-vr,vr,0);ctx.quadraticCurveTo(0,vr,-vr,0);ctx.stroke()}else if(b.type==="sugar"){ctx.fillStyle="#fff";ctx.fillRect(-vr,-vr,vr*2,vr*2);ctx.strokeStyle="#ffd166";ctx.lineWidth=2;ctx.strokeRect(-vr,-vr,vr*2,vr*2)}else if(b.type==="bean"){ctx.fillStyle="#5c2e13";ctx.beginPath();ctx.ellipse(0,0,vr,vr*1.45,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#d28a45";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-vr);ctx.quadraticCurveTo(4,0,0,vr);ctx.stroke()}else if(b.type==="spark"){ctx.strokeStyle="#c79bff";ctx.lineWidth=IS_MOBILE?6:4;ctx.beginPath();ctx.moveTo(-vr,0);ctx.lineTo(vr,0);ctx.moveTo(0,-vr);ctx.lineTo(0,vr);ctx.stroke()}ctx.restore()}
+function drawHeart(x,y){ctx.save();ctx.translate(x,y);if(IS_MOBILE)ctx.scale(1.55,1.55);ctx.fillStyle="#ff3333";ctx.beginPath();ctx.moveTo(0,9);ctx.bezierCurveTo(-18,-5,-10,-18,0,-8);ctx.bezierCurveTo(10,-18,18,-5,0,9);ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();ctx.restore()}
 function makeParticles(x,y,color,count){for(let i=0;i<count;i++)particles.push({x,y,vx:(Math.random()-.5)*5,vy:(Math.random()-.5)*5,life:20,color})}
 
 async function openAdmin(){
