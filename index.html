@@ -31,7 +31,7 @@ canvas{width:min(100%,690px);height:min(58vh,430px);max-height:430px;border:4px 
 .screen{display:none;position:absolute;inset:0;z-index:30;overflow:auto;background:linear-gradient(#0a0a0af7,#030303f7);padding:18px}.screen.active{display:block}.card{width:min(100%,930px);margin:22px auto;border:3px solid #fff;background:linear-gradient(#141414,#070707);padding:18px;box-shadow:0 0 0 4px #000,0 20px 70px #000}.badge{display:inline-block;border:2px solid var(--cyan);color:var(--cyan);padding:6px 10px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}.title{color:var(--cream);text-shadow:0 3px 0 #5b2700;font-size:clamp(32px,6vw,60px);line-height:.98;margin-bottom:14px}.text{color:#eee;font-size:17px;line-height:1.65;white-space:pre-line}.infogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.ic{border:2px solid #fff;background:#070707;padding:12px}.ic strong{display:block;color:var(--gold);font-size:17px;margin-bottom:6px}.ic p{font-size:13px;color:#ddd;line-height:1.45}.input{width:100%;margin-top:12px;padding:14px;border:3px solid #fff;background:#000;color:#fff;font-family:inherit;font-size:16px;outline:0}.input:focus{border-color:var(--gold);box-shadow:0 0 24px #ffd16640}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.choice{border:3px solid #fff;background:#000;color:#fff;text-align:left;padding:14px;cursor:pointer}.choice strong{display:block;color:var(--cream);font-size:19px;margin-bottom:6px}.choice small{display:block;color:#d5d5d5;font-size:13px;line-height:1.45}.choice:hover{background:#fff;color:#000;transform:translateY(-2px)}.choice:hover strong,.choice:hover small{color:#000}.hint{color:var(--cyan);margin-top:10px;font-size:13px;line-height:1.45}.err{display:none;color:#ff9393;font-weight:900;margin-top:10px;font-size:13px}.coupon{display:none;margin-top:18px;background:linear-gradient(#fff5d3,#ffe29d);color:#2f1303;border:4px dashed var(--orange);padding:18px}.coupon h3{color:#d85d00;font-size:34px}.code{margin-top:12px;background:#2a1205;color:var(--gold);padding:16px;border:3px solid #7d4e1d;text-align:center;font-size:28px;font-weight:900;letter-spacing:2px}.stamp{display:none;margin-top:12px;background:#0b6d31;color:white;border:3px solid #083f1d;padding:12px;text-align:center;font-weight:900}.tableWrap{margin-top:16px;overflow:auto;border:3px solid #fff}table{width:100%;border-collapse:collapse;min-width:1100px;background:#050505}th,td{padding:10px;border-bottom:1px solid #ffffff40;text-align:left;font-size:13px}th{color:var(--cream);background:#111;position:sticky;top:0}
 .smallbtn{border:2px solid #fff;background:#000;color:#fff;padding:7px 9px;font-weight:900;cursor:pointer}.smallbtn:hover{background:#fff;color:#000}
 .flash{animation:flash .22s linear 1}@keyframes flash{0%{filter:brightness(1)}40%{filter:brightness(2)}100%{filter:brightness(1)}}.shake{animation:shake .22s linear 1}@keyframes shake{0%{transform:translate(0,0)}25%{transform:translate(-6px,1px)}50%{transform:translate(5px,-1px)}75%{transform:translate(-4px,2px)}100%{transform:translate(0,0)}}
-@media(max-width:960px){body{padding:0}.app{height:100vh;width:100%;border:0;box-shadow:none}.layout{grid-template-columns:1fr}.side{display:none}.bw{grid-template-columns:1fr}.gobcard{height:260px}.info{max-height:245px;overflow:auto}.phases{grid-template-columns:1fr}.actions{grid-template-columns:repeat(2,1fr)}.mc{display:flex}canvas{height:48vh}.choices,.infogrid{grid-template-columns:1fr}}
+@media(max-width:960px){body{padding:0}.app{height:100vh;width:100%;border:0;box-shadow:none}.layout{grid-template-columns:1fr}.side{display:none}.bw{grid-template-columns:1fr}.gobcard{height:235px}.info{max-height:210px;overflow:auto}.phases{grid-template-columns:1fr}.actions{grid-template-columns:repeat(2,1fr)}.mc{display:flex}canvas{height:54vh}.choices,.infogrid{grid-template-columns:1fr}.top{padding:9px 10px}.brand p{display:none}.btn{padding:8px 10px}.dialog{min-height:96px;font-size:14px}.main{gap:8px;padding:8px}.act{padding:12px 8px;font-size:15px}}
 </style>
 </head>
 <body>
@@ -52,7 +52,7 @@ canvas{width:min(100%,690px);height:min(58vh,430px);max-height:430px;border:4px 
 No se puede jugar sin entregar datos para validación del premio.</div>
       <div class="stage">
         <div class="boss" id="bossScene"><div class="bw"><div class="gobcard"><div class="gob"><div class="ear l"></div><div class="ear r"></div><div class="head"><div class="hair"></div><div class="brow l"></div><div class="brow r"></div><div class="eye l"></div><div class="eye r"></div><div class="nose"></div><div class="mouth"></div></div><div class="body"></div><div class="arm l"></div><div class="arm r"></div><div class="apron"><div class="lb">LB</div></div><div class="cup"></div><div class="leg l"></div><div class="leg r"></div></div></div><div class="info"><div class="bt">RUGMAR, EL GOBLIN DEL AMERICANO</div><div class="btxt">Rugmar custodia el café americano de La Barra Montemar. No entrega premios por suerte: exige registro, resistencia, concentración y una buena frase final.</div><div class="rules">Esta versión guarda cada jugada en Firebase Firestore. El administrador puede revisar los registros y canjear cupones desde el panel privado.</div><div class="phases"><div class="phase"><strong>1-2</strong>Lluvia de espresso y vapor.</div><div class="phase"><strong>3-4</strong>Azúcar, granos y diagonales.</div><div class="phase"><strong>5-6</strong>Patrones cruzados y ráfagas.</div><div class="phase"><strong>7-8</strong>Furia final del americano.</div></div></div></div></div>
-        <div class="battle" id="battleScene"><div class="battleWrap"><div class="bh"><div class="hud">Ataque: <strong id="attackTxt">-</strong></div><div class="hud">Tiempo: <strong id="timeTxt">0s</strong></div><div class="hud">Objetivo: <strong>sobrevivir</strong></div></div><canvas id="canvas" width="690" height="430"></canvas><div class="mc"><div class="dpad"><button class="empty"></button><button data-key="up">▲</button><button class="empty"></button><button data-key="left">◀</button><button data-key="down">▼</button><button data-key="right">▶</button><button class="empty"></button><button data-key="slow">●</button><button class="empty"></button></div><div class="tips"><button class="tip" disabled>● = movimiento preciso</button><button class="tip" disabled>Evita café, azúcar, vapor y granos</button></div></div></div></div>
+        <div class="battle" id="battleScene"><div class="battleWrap"><div class="bh"><div class="hud">Ataque: <strong id="attackTxt">-</strong></div><div class="hud">Tiempo: <strong id="timeTxt">0s</strong></div><div class="hud">Objetivo: <strong>sobrevivir</strong></div></div><canvas id="canvas" width="690" height="430"></canvas><div class="mc"><div class="dpad"><button class="empty"></button><button data-key="up">▲</button><button class="empty"></button><button data-key="left">◀</button><button data-key="down">▼</button><button data-key="right">▶</button><button class="empty"></button><button data-key="slow">●</button><button class="empty"></button></div><div class="tips"><button class="tip" disabled>Arrastra el dedo en el cuadro</button><button class="tip" disabled>También sirven los botones</button></div></div></div></div>
       </div>
       <div class="actions"><button class="act" id="actHablar">Hablar<span>Sube respeto</span></button><button class="act" id="actPreparar">Preparar<span>Sube puntaje</span></button><button class="act" id="actConcentrar">Concentrar<span>Mejora control</span></button><button class="act" id="actPiedad">Piedad<span>Sube ánimo</span></button></div>
     </main>
@@ -63,7 +63,12 @@ No se puede jugar sin entregar datos para validación del premio.</div>
 Premio:
 - 1 Café Americano gratis.
 - El cupón solo aparece si superas la prueba.
-- El staff valida el cupón desde el panel admin.</p><div class="infogrid"><div class="ic"><strong>1. Regístrate</strong><p>Nombre y contacto son obligatorios.</p></div><div class="ic"><strong>2. Juega</strong><p>Supera una prueba larga con varias fases.</p></div><div class="ic"><strong>3. Valida</strong><p>Si ganas, el equipo valida el cupón desde Firebase.</p></div></div><input class="input" id="regName" placeholder="Nombre del jugador *"><input class="input" id="regContact" placeholder="WhatsApp o email *"><div class="err" id="regError"></div><div class="choices"><button class="choice" id="startNormal"><strong>Modo Normal</strong><small>8 fases, dificultad progresiva. No es un premio automático.</small></button><button class="choice" id="startDificil"><strong>Modo Difícil</strong><small>Más velocidad, más daño y menor margen de error.</small></button></div></div></section>
+- El staff valida el cupón desde el panel admin.
+
+En celular:
+- Puedes mover el corazón arrastrando el dedo dentro del cuadro de batalla.
+- También puedes usar los botones táctiles.
+- La dificultad se adapta automáticamente para móvil.</p><div class="infogrid"><div class="ic"><strong>1. Regístrate</strong><p>Nombre y contacto son obligatorios.</p></div><div class="ic"><strong>2. Juega</strong><p>Supera una prueba larga con varias fases.</p></div><div class="ic"><strong>3. Valida</strong><p>Si ganas, el equipo valida el cupón desde Firebase.</p></div></div><input class="input" id="regName" placeholder="Nombre del jugador *"><input class="input" id="regContact" placeholder="WhatsApp o email *"><div class="err" id="regError"></div><div class="choices"><button class="choice" id="startNormal"><strong>Modo Normal</strong><small>8 fases, dificultad progresiva. No es un premio automático.</small></button><button class="choice" id="startDificil"><strong>Modo Difícil</strong><small>Más velocidad, más daño y menor margen de error.</small></button></div></div></section>
 
   <section class="screen" id="final"><div class="card"><div class="badge">Resultado</div><h2 class="title" id="finalTitle">Resultado</h2><p class="text" id="finalText"></p><div id="phraseBox"><input class="input" id="finalPhrase" placeholder="Escribe una frase final sobre La Barra Montemar y el café americano"><div class="btns" style="margin-top:14px"><button class="btn gold" id="sendPhrase">Enviar frase final</button></div><div class="hint">Usa palabras como café, americano, La Barra, Montemar, aroma, energía o Rugmar.</div></div><div class="coupon" id="coupon"><h3>☕ Premio desbloqueado</h3><p><strong>1 Café Americano gratis</strong></p><p>Presenta esta pantalla al equipo de La Barra Montemar.</p><div class="code" id="couponCode">AMERICANO-0000</div><div class="stamp" id="stamp">CUPÓN PENDIENTE DE VALIDACIÓN ADMIN</div><div class="hint">El staff debe entrar al panel Admin para marcar este cupón como canjeado.</div></div><div class="btns" style="margin-top:14px"><button class="btn cyan" id="playAgain">Jugar otra vez</button></div></div></section>
 
@@ -98,6 +103,10 @@ const auth = getAuth(app);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const keys = {up:false,down:false,left:false,right:false,slow:false};
+
+// Ajuste móvil: controles por arrastre, menor dificultad y mejor lectura táctil.
+const IS_MOBILE = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 820;
+let touchTarget = null;
 
 let firebaseReady = false;
 let adminRows = [];
@@ -166,12 +175,15 @@ async function updatePlay(fields){
 }
 
 function resetGame(){
+  const baseHp = IS_MOBILE ? 28 : 22;
+  const basePhases = IS_MOBILE ? 6 : 8;
   state = {
     name:"",contact:"",mode:"normal",
-    hp:22,maxHp:22,focus:0,mood:0,maxMood:14,respect:0,score:0,combo:1,
-    phase:0,maxPhase:8,inBattle:false,waitingAction:false,finalReady:false,won:false,coupon:null,lastResult:""
+    hp:baseHp,maxHp:baseHp,focus:0,mood:0,maxMood:14,respect:0,score:0,combo:1,
+    phase:0,maxPhase:basePhases,inBattle:false,waitingAction:false,finalReady:false,won:false,coupon:null,lastResult:""
   };
-  player = {x:345,y:215,r:8};
+  player = {x:345,y:215,r:IS_MOBILE ? 6 : 8};
+  touchTarget = null;
   bullets=[];particles=[];stars=[];elapsed=0;lastSpawn=0;currentDocId=null;currentDocRef=null;
   cancelAnimationFrame(anim);
 }
@@ -199,7 +211,11 @@ async function startGame(mode){
 
   resetGame();
   state.mode=mode; state.name=name; state.contact=contact;
-  if(mode==="dificil"){state.hp=16;state.maxHp=16}
+  if(mode==="dificil"){
+    state.hp = IS_MOBILE ? 22 : 16;
+    state.maxHp = IS_MOBILE ? 22 : 16;
+    state.maxPhase = IS_MOBILE ? 7 : 8;
+  }
   updateUI();
 
   try{
@@ -216,7 +232,7 @@ async function startGame(mode){
   closeScreen("intro");
   state.waitingAction=true;
   log("Registro online completo. Inicia la prueba.");
-  setDialogue(name+" entra a La Barra Montemar.\\nRugmar golpea el mesón con su taza.\\n“Si quieres el Americano, tendrás que ganártelo.”");
+  setDialogue(name+" entra a La Barra Montemar.\\nRugmar golpea el mesón con su taza.\\n“Si quieres el Americano, tendrás que ganártelo.”" + (IS_MOBILE ? "\\nTip móvil: arrastra el dedo dentro del cuadro de batalla." : ""));
   sfx("start");
 }
 
@@ -311,7 +327,10 @@ function judgePhrase(){
   const words=["café","cafe","americano","barra","la barra","montemar","rugmar","aroma","energía","energia","grano","despertar"];
   let power=0; words.forEach(w=>{if(low.includes(w))power+=3}); if(phrase.length>90)power+=10;
   const total=state.score+state.hp*8+state.respect*15+state.mood*12+power;
-  const needTotal=state.mode==="dificil"?620:520, needHp=state.mode==="dificil"?7:8, needRespect=state.mode==="dificil"?10:8, needMood=state.mode==="dificil"?8:7;
+  const needTotal = IS_MOBILE ? (state.mode==="dificil" ? 540 : 450) : (state.mode==="dificil" ? 620 : 520);
+  const needHp = IS_MOBILE ? (state.mode==="dificil" ? 6 : 7) : (state.mode==="dificil" ? 7 : 8);
+  const needRespect = IS_MOBILE ? (state.mode==="dificil" ? 8 : 6) : (state.mode==="dificil" ? 10 : 8);
+  const needMood = IS_MOBILE ? (state.mode==="dificil" ? 7 : 6) : (state.mode==="dificil" ? 8 : 7);
   if(total>=needTotal&&state.hp>=needHp&&state.respect>=needRespect&&state.mood>=needMood){
     state.won=true; state.lastResult="Ganó premio";
     $("finalTitle").textContent="Americano desbloqueado";
@@ -350,21 +369,47 @@ function unlockCoupon(total, phrase){
 function loop(t){
   const dt=Math.min(33,t-lastTime); lastTime=t; elapsed+=dt;
   updateBattle(); drawBattle();
-  const dur=state.mode==="dificil"?18000:16500;
+  const dur = IS_MOBILE ? (state.mode==="dificil" ? 14000 : 12500) : (state.mode==="dificil" ? 18000 : 16500);
   $("timeTxt").textContent=Math.max(0,Math.ceil((dur-elapsed)/1000))+"s";
   if(elapsed>=dur){finishPhase();return}
   anim=requestAnimationFrame(loop);
 }
 
 function updateBattle(){
-  let speed=state.focus>0?4.2:3.5; if(keys.slow)speed*=.58;
+  let speed = IS_MOBILE ? (state.focus>0 ? 5.2 : 4.6) : (state.focus>0 ? 4.2 : 3.5);
+  if(keys.slow)speed*=.58;
+
+  // En celular, el jugador puede arrastrar el corazón dentro del cuadro.
+  if(IS_MOBILE && touchTarget){
+    const dx = touchTarget.x - player.x;
+    const dy = touchTarget.y - player.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if(dist > 1){
+      const step = Math.min(speed * 1.35, dist);
+      player.x += (dx / dist) * step;
+      player.y += (dy / dist) * step;
+    }
+  }
+
   if(keys.up)player.y-=speed; if(keys.down)player.y+=speed; if(keys.left)player.x-=speed; if(keys.right)player.x+=speed;
   player.x=Math.max(28,Math.min(canvas.width-28,player.x)); player.y=Math.max(28,Math.min(canvas.height-28,player.y));
-  const diff=state.mode==="dificil"?1.35:1, interval=Math.max(115,330-state.phase*22)/diff;
+
+  const diff = (state.mode==="dificil"?1.35:1) * (IS_MOBILE ? 0.78 : 1);
+  const mobileBreath = IS_MOBILE ? 1.65 : 1;
+  const interval=Math.max(115,330-state.phase*22) * mobileBreath / Math.max(diff, .1);
+
   if(elapsed-lastSpawn>interval){spawnPattern(); lastSpawn=elapsed}
   bullets.forEach(b=>{b.x+=b.vx*diff;b.y+=b.vy*diff;b.life--;if(b.spin)b.a+=.12;if(b.wave)b.y+=Math.sin((elapsed+b.seed)/120)*b.wave});
   bullets=bullets.filter(b=>b.life>0&&b.x>-80&&b.x<canvas.width+80&&b.y>-80&&b.y<canvas.height+80);
-  for(const b of bullets){const dx=b.x-player.x,dy=b.y-player.y;if(Math.sqrt(dx*dx+dy*dy)<b.r+player.r){b.life=0;damage(b.dmg||1);makeParticles(player.x,player.y,"#ff5a5f",12);break}}
+
+  for(const b of bullets){
+    const dx=b.x-player.x,dy=b.y-player.y;
+    const collisionBonus = IS_MOBILE ? -2.5 : 0;
+    if(Math.sqrt(dx*dx+dy*dy)<Math.max(2, b.r+player.r+collisionBonus)){
+      b.life=0;damage(b.dmg||1);makeParticles(player.x,player.y,"#ff5a5f",12);break
+    }
+  }
+
   particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--}); particles=particles.filter(p=>p.life>0);
   stars.forEach(s=>{s.y+=s.vy;s.life--}); stars=stars.filter(s=>s.life>0);
 }
@@ -472,6 +517,22 @@ function exportCSV(){
   const url=URL.createObjectURL(blob), a=document.createElement("a");
   a.href=url; a.download="base-firebase-americano-la-barra.csv"; a.click(); URL.revokeObjectURL(url);
 }
+
+function setTouchTargetFromEvent(e){
+  const rect = canvas.getBoundingClientRect();
+  const point = e.touches ? e.touches[0] : e;
+  touchTarget = {
+    x: (point.clientX - rect.left) * (canvas.width / rect.width),
+    y: (point.clientY - rect.top) * (canvas.height / rect.height)
+  };
+}
+canvas.addEventListener("touchstart", e=>{e.preventDefault();setTouchTargetFromEvent(e);},{passive:false});
+canvas.addEventListener("touchmove", e=>{e.preventDefault();setTouchTargetFromEvent(e);},{passive:false});
+canvas.addEventListener("touchend", ()=>{touchTarget=null;});
+canvas.addEventListener("mousedown", e=>{setTouchTargetFromEvent(e);});
+canvas.addEventListener("mousemove", e=>{if(e.buttons===1)setTouchTargetFromEvent(e);});
+canvas.addEventListener("mouseup", ()=>{touchTarget=null;});
+canvas.addEventListener("mouseleave", ()=>{touchTarget=null;});
 
 window.addEventListener("keydown",e=>{if(["ArrowUp","w","W"].includes(e.key))keys.up=true;if(["ArrowDown","s","S"].includes(e.key))keys.down=true;if(["ArrowLeft","a","A"].includes(e.key))keys.left=true;if(["ArrowRight","d","D"].includes(e.key))keys.right=true;if(["Shift"," "].includes(e.key))keys.slow=true});
 window.addEventListener("keyup",e=>{if(["ArrowUp","w","W"].includes(e.key))keys.up=false;if(["ArrowDown","s","S"].includes(e.key))keys.down=false;if(["ArrowLeft","a","A"].includes(e.key))keys.left=false;if(["ArrowRight","d","D"].includes(e.key))keys.right=false;if(["Shift"," "].includes(e.key))keys.slow=false});
